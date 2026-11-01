@@ -55,7 +55,9 @@ public class RegraSame implements Regra{
 				dono.ganharPonto();
 				antigoDono.perderPonto();
 			}
+			return celulasCapturadas;
 		}
+		celulasCapturadas.clear();
 		return celulasCapturadas;
 	}
 
