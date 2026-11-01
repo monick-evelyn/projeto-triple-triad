@@ -8,8 +8,6 @@ import terminal.Tela;
 import java.util.ArrayList;
 import java.util.List;
 
-import jogo.ConfiguracoesRegras;
-
 public class TesteTela {
 
 	public static void main(String[] args) {

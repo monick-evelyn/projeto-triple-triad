@@ -46,18 +46,9 @@ public class RegraSame implements Regra{
 			}
 		}
 		
-		if (qtdCelulasIguais >= 2) {
-			for (Celula celulaCapturada : celulasVizinhas) {
-				Jogador antigoDono = celulaCapturada.getDono();
-				
-				celulaCapturada.trocarDono(dono);
-				
-				dono.ganharPonto();
-				antigoDono.perderPonto();
-			}
-			return celulasCapturadas;
+		if (qtdCelulasIguais < 2) {
+			celulasCapturadas.clear();
 		}
-		celulasCapturadas.clear();
 		return celulasCapturadas;
 	}
 

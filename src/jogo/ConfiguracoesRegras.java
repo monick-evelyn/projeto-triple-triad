@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import regras.Regra;
+import regras.RegraSame;
 
 public class ConfiguracoesRegras {
 	private boolean same;
@@ -50,11 +51,11 @@ public class ConfiguracoesRegras {
 	public List<Regra> regrasAtivas() {
 		List<Regra> regras = new ArrayList<>(); 
 		
-		/* TODO: Criar classes com demais regras
 		if (same) {
 			regras.add(new RegraSame()); 
 		}
 		
+		/* TODO: Criar classes com demais regras
 		if (plus) {
 			regras.add(new RegraPlus());
 		} 

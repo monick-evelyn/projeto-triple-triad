@@ -49,9 +49,6 @@ public class TesteRegraSame {
 
 		verificar("Same: 10 = 10 e 0 = 0 captura a posição 1 e 5",
 				regraSame.capturas(tabuleiro1, 4, jogador1).equals(esperado));
-		verificar("Same: Troca o dono da 1", tabuleiro1.getCelula(1).getDono() == jogador1);
-		verificar("Same: Troca o dono da 5", tabuleiro1.getCelula(5).getDono() == jogador1);
-		verificar("Same: Muda os pontos", jogador1.getPontos() == 7 && jogador2.getPontos() == 3);
 
 		
 		System.out.println();
@@ -71,8 +68,6 @@ public class TesteRegraSame {
 		
 		verificar("Same: 3 = 3, porém não captura",
 				regraSame.capturas(tabuleiro2, 4, jogador1).equals(esperado));
-		verificar("Same: Não troca o dono da 1", tabuleiro2.getCelula(1).getDono() == jogador2);
-		verificar("Same: Não muda os pontos", jogador1.getPontos() == 7 && jogador2.getPontos() == 3);
 		
 		System.out.println();
 		// 3. Mais de duas igualdades capturam a carta 
@@ -92,16 +87,11 @@ public class TesteRegraSame {
 		esperado.add(5);
 		esperado.add(1);
 		esperado.add(3);
-		System.out.println(esperado);
 		
 		verificar("Same: 4 = 4; 1 = 1; 10 = 10, captura na posicão 1, 3 e 5",
 				regraSame.capturas(tabuleiro3, 2, jogador1).equals(esperado));
-		verificar("Same: Troca o dono da 1", tabuleiro3.getCelula(1).getDono() == jogador1);
-		verificar("Same: Troca o dono da 3", tabuleiro3.getCelula(3).getDono() == jogador1);
-		verificar("Same: Troca o dono da 5", tabuleiro3.getCelula(5).getDono() == jogador1);
-		verificar("Same: Muda os pontos", jogador1.getPontos() == 10 && jogador2.getPontos() == 0);
 		
-		// 3. Carta própria não conta para o mínimo de 2
+		// 4. Carta própria não conta para o mínimo de 2
 		System.out.println();
 		Tabuleiro tabuleiro4 = new Tabuleiro();
 		Carta carta11 = new Carta("Mago", 3, 4, 3, 3); // cima, direita, baixo, esquerda
@@ -115,9 +105,6 @@ public class TesteRegraSame {
 		esperado.clear();
 		verificar("Same: 10 = 10 (outro dono) e 4 = 4 (mesmo dono) porém não captura",
 				regraSame.capturas(tabuleiro4, 2, jogador1).equals(esperado));
-		verificar("Same: Não troca o dono da 5", tabuleiro4.getCelula(5).getDono() == jogador2);
-		verificar("Same: Permanece o dono da 1", tabuleiro4.getCelula(1).getDono() == jogador1);
-		verificar("Same: Não muda os pontos", jogador1.getPontos() == 10 && jogador2.getPontos() == 0);
 		
 		// 4. A borda do tabuleiro não conta como igualdade
 		System.out.println();
@@ -133,9 +120,6 @@ public class TesteRegraSame {
 		
 		verificar("Same: Não captura pois é borda",
 				regraSame.capturas(tabuleiro5, 5, jogador1).equals(esperado));
-		verificar("Same: Não troca o dono da 3", tabuleiro5.getCelula(3).getDono() == jogador2);
-		verificar("Same: Permanece o dono da 1", tabuleiro5.getCelula(1).getDono() == jogador2);
-		verificar("Same: Não muda os pontos", jogador1.getPontos() == 10 && jogador2.getPontos() == 0);
 	}
 
 	private static void verificar(String descricao, boolean passou) {

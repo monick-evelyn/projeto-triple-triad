@@ -218,7 +218,6 @@ public class TesteCaptura {
 		verificar("Combo: dois caminhos dão B 8 e A 2", b3.getPontos() == 8 && a3.getPontos() == 2);
 
 		// 4. O motor zera o resultado da jogada anterior
-		Jogador a4 = new Jogador("A");
 		Jogador b4 = new Jogador("B");
 		Tabuleiro t4 = new Tabuleiro();
 		t4.colocarCarta(5, carta(1, 1, 1, 1), b4);
