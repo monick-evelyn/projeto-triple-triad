@@ -7,7 +7,6 @@ import modelo.Carta;
 import modelo.Jogador;
 import modelo.Tabuleiro;
 import regras.Regra;
-import regras.RegraBasica;
 import regras.RegraSame;
 
 public class TesteRegraSame {
@@ -118,6 +117,24 @@ public class TesteRegraSame {
 				regraSame.capturas(tabuleiro4, 2, jogador1).equals(esperado));
 		verificar("Same: Não troca o dono da 5", tabuleiro4.getCelula(5).getDono() == jogador2);
 		verificar("Same: Permanece o dono da 1", tabuleiro4.getCelula(1).getDono() == jogador1);
+		verificar("Same: Não muda os pontos", jogador1.getPontos() == 10 && jogador2.getPontos() == 0);
+		
+		// 4. A borda do tabuleiro não conta como igualdade
+		System.out.println();
+		Tabuleiro tabuleiro5 = new Tabuleiro();
+		Carta carta14 = new Carta("Dumbledore", 1, 1, 1, 1); // cima, direita, baixo, esquerda
+		Carta carta15 = new Carta("Valdemort", 1, 1, 1, 1); // cima, direita, baixo, esquerda
+		Carta carta16 = new Carta("Harry", 1, 1, 1, 1); // cima, direita, baixo, esquerda
+		
+		tabuleiro5.colocarCarta(1, carta14, jogador2);
+		tabuleiro5.colocarCarta(5, carta15, jogador1);
+		tabuleiro5.colocarCarta(3, carta16, jogador2);
+		
+		
+		verificar("Same: Não captura pois é borda",
+				regraSame.capturas(tabuleiro5, 5, jogador1).equals(esperado));
+		verificar("Same: Não troca o dono da 3", tabuleiro5.getCelula(3).getDono() == jogador2);
+		verificar("Same: Permanece o dono da 1", tabuleiro5.getCelula(1).getDono() == jogador2);
 		verificar("Same: Não muda os pontos", jogador1.getPontos() == 10 && jogador2.getPontos() == 0);
 	}
 
