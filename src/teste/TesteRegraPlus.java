@@ -38,7 +38,7 @@ public class TesteRegraPlus {
 		
 		tabuleiro1.colocarCarta(2, carta, jogador2); // cima, direita, baixo, esquerda
 		tabuleiro1.colocarCarta(4, carta1, jogador2);
-		tabuleiro1.colocarCarta(5, carta2, jogador1); // cima, direita, baixo, esquerda
+		tabuleiro1.colocarCarta(5, carta2, jogador1);
 
 		List<Integer> esperado = new ArrayList<Integer>();
 		esperado.add(2);
@@ -47,6 +47,17 @@ public class TesteRegraPlus {
 		System.out.println(regraPlus.capturas(tabuleiro1, 5, jogador1));
 		
 		verificar("Plus: 3 + 4 = 7 e 2 + 5 = 7 captura 2 e 4", regraPlus.capturas(tabuleiro1, 5, jogador1).equals(esperado));
+		
+		// 2. Somas diferentes não capturam (menos que duas)
+		esperado.clear();
+		
+		Tabuleiro tabuleiro2 = new Tabuleiro();
+		tabuleiro2.colocarCarta(2, new Carta("Mago", 1, 1, 4, 1), jogador2); // cima, direita, baixo, esquerda
+		tabuleiro2.colocarCarta(4, new Carta("Arqueiro", 1, 6, 1, 1), jogador2);
+		tabuleiro2.colocarCarta(5, new Carta("Guerreiro", 3, 0, 0, 2), jogador1);
+
+		verificar("Plus: 3 + 4 = 7 e 2 + 6 = 8 não captura",
+				regraPlus.capturas(tabuleiro2, 5, jogador1).equals(esperado));
 
 	}
 
