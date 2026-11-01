@@ -31,7 +31,6 @@ public class RegraPlus implements Regra {
 		Map<Integer, Integer> qtdPorSoma = new HashMap<Integer, Integer>();
 
 		for (Direcao direcao : Direcao.values()) {
-
 			int posicaoVizinha = direcao.getPosicaoVizinha(posicao);
 
 			if (posicaoVizinha != Direcao.FORA) {
@@ -42,13 +41,13 @@ public class RegraPlus implements Regra {
 					int ladoVizinho = celulaVizinha.getCarta().getLado(direcao.oposta());
 					int soma = ladoAtual + ladoVizinho;
 
-					somasRealizadas.add(soma);
 					posicoesVizinhas.add(posicaoVizinha);
+					somasRealizadas.add(soma);
 					qtdPorSoma.put(soma, qtdPorSoma.getOrDefault(soma, 0) + 1);
 				}
 			}
 		}
-		for (int i = 1; i < celulasCapturadas.size(); i++) {
+		for (int i = 0; i < posicoesVizinhas.size(); i++) {
 			if (qtdPorSoma.get(somasRealizadas.get(i)) >= 2) {
 				celulasCapturadas.add(posicoesVizinhas.get(i));
 			}
