@@ -73,6 +73,20 @@ public class TesteRegraPlus {
 
 		verificar("Plus: 7 (outro dono) e 7 (mesmo dono) não captura",
 				regraPlus.capturas(tabuleiro4, 5, jogador1).equals(esperado));
+		
+		// 5. Dois grupos de somas: 7, 7 e 10, 10 capturam as quatro
+		Tabuleiro tabuleiro5 = new Tabuleiro();
+		tabuleiro5.colocarCarta(2, new Carta("A", 1, 1, 4, 1), jogador2); // baixo 4 -> 3 + 4 = 7
+		tabuleiro5.colocarCarta(4, new Carta("B", 1, 5, 1, 1), jogador2); // direita 5 -> 2 + 5 = 7
+		tabuleiro5.colocarCarta(6, new Carta("C", 1, 1, 1, 6), jogador2); // esquerda 6 -> 4 + 6 = 10
+		tabuleiro5.colocarCarta(8, new Carta("D", 4, 1, 1, 1), jogador2); // cima 4 -> 6 + 4 = 10
+		tabuleiro5.colocarCarta(5, new Carta("P", 3, 4, 6, 2), jogador1);
+		
+		esperado.add(2);
+		esperado.add(8);
+		esperado.add(4);
+		esperado.add(6);
+		verificar("Plus: dois pares de somas (7 e 10) capturam 2, 8, 4 e 6", regraPlus.capturas(tabuleiro5, 5, jogador1).equals(esperado));
 	}
 
 	private static void verificar(String descricao, boolean passou) {
