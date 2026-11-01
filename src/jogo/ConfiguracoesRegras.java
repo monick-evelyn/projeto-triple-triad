@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import regras.Regra;
+import regras.RegraPlus;
 import regras.RegraSame;
 
 public class ConfiguracoesRegras {
@@ -55,11 +56,10 @@ public class ConfiguracoesRegras {
 			regras.add(new RegraSame()); 
 		}
 		
-		/* TODO: Criar classes com demais regras
 		if (plus) {
 			regras.add(new RegraPlus());
-		} 
-		*/
+		}
+		
 		return regras;
 	}
 	
