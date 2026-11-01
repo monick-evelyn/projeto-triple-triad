@@ -56,9 +56,23 @@ public class TesteRegraPlus {
 		tabuleiro2.colocarCarta(4, new Carta("Arqueiro", 1, 6, 1, 1), jogador2);
 		tabuleiro2.colocarCarta(5, new Carta("Guerreiro", 3, 0, 0, 2), jogador1);
 
-		verificar("Plus: 3 + 4 = 7 e 2 + 6 = 8 não captura",
-				regraPlus.capturas(tabuleiro2, 5, jogador1).equals(esperado));
+		verificar("Plus: 3 + 4 = 7 e 2 + 6 = 8 não captura", regraPlus.capturas(tabuleiro2, 5, jogador1).equals(esperado));
+		
+		// 3. Uma soma sozinha não captura
+		Tabuleiro tabuleiro3 = new Tabuleiro();
+		tabuleiro3.colocarCarta(2, new Carta("Mago", 1, 1, 4, 1), jogador2);
+		tabuleiro3.colocarCarta(5, new Carta("Guerreiro", 3, 0, 0, 2), jogador1);
 
+		verificar("Plus: só uma vizinha não captura", regraPlus.capturas(tabuleiro3, 5, jogador1).equals(esperado));
+		
+		// 4. Carta própria não conta para o mínimo de 2
+		Tabuleiro tabuleiro4 = new Tabuleiro();
+		tabuleiro4.colocarCarta(2, new Carta("Mago", 1, 1, 4, 1), jogador2);
+		tabuleiro4.colocarCarta(4, new Carta("Arqueiro", 1, 5, 1, 1), jogador1);
+		tabuleiro4.colocarCarta(5, new Carta("Guerreiro", 3, 0, 0, 2), jogador1);
+
+		verificar("Plus: 7 (outro dono) e 7 (mesmo dono) não captura",
+				regraPlus.capturas(tabuleiro4, 5, jogador1).equals(esperado));
 	}
 
 	private static void verificar(String descricao, boolean passou) {
