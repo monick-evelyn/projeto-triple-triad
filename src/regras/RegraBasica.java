@@ -2,7 +2,6 @@ package regras;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import modelo.Carta;
 import modelo.Celula;

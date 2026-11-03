@@ -19,6 +19,8 @@ public class TesteMotorDeCaptura {
 		testarVizinhas();
 		testarDuasRegras();
 		testarCombo();
+		testarSame();
+		testarPlus();
 
 		System.out.println();
 		if (falhas == 0) {
@@ -127,6 +129,58 @@ public class TesteMotorDeCaptura {
 		MotorDeCaptura doisCaminhos = new MotorDeCaptura(configuracao(true));
 		verificar("Dois caminhos: 3 cartas viram", doisCaminhos.aplicar(t3, 5, b3).size() == 3);
 		verificar("Dois caminhos: B 8 e A 2", b3.getPontos() == 8 && a3.getPontos() == 2);
+	}
+	
+	private static void testarSame() throws Exception {
+		Jogador jogador1 = new Jogador("Monick");
+		Jogador jogador2 = new Jogador("Clarissa");
+		Tabuleiro tabuleiro = new Tabuleiro();
+		tabuleiro.colocarCarta(1, new Carta("A", 9, 9, 10, 9, "NEUTRAL"), jogador2); // cima, direita, baixo, esquerda
+		tabuleiro.colocarCarta(5, new Carta("B", 9, 9, 9, 0, "NEUTRAL"), jogador2);
+		tabuleiro.colocarCarta(4, new Carta("P", 10, 0, 1, 1, "NEUTRAL"), jogador1);
+
+		ConfiguracoesRegras config = configuracao(false);
+		config.setPlus(false); // isola o Same
+		MotorDeCaptura motor = new MotorDeCaptura(config);
+		List<Integer> viraram = motor.aplicar(tabuleiro, 4, jogador1);
+
+		List<Integer> esperado = new ArrayList<Integer>();
+		esperado.add(1);
+		esperado.add(5);
+		
+		verificar("Motor + Same: retorna 1 e 5", viraram.equals(esperado));
+		verificar("Motor + Same: 1 passa a ser do jogador 1", tabuleiro.getCelula(1).getDono() == jogador1);
+		verificar("Motor + Same: 5 passa a ser do jogador 1", tabuleiro.getCelula(5).getDono() == jogador1);
+		verificar("Motor + Same: jogador 1 = 7 pontos e jogador 2 = 3 pontos", jogador1.getPontos() == 7 && jogador2.getPontos() == 3);
+		verificar("Motor + Same: registra 'Same!'", motor.getRegrasAtivadas().contains("Same!"));
+	}
+	
+	private static void testarPlus() throws Exception {
+		Jogador jogador1 = new Jogador("J1");
+		Jogador jogador2 = new Jogador("J2");
+		Tabuleiro tabuleiro = new Tabuleiro();
+		tabuleiro.colocarCarta(2, new Carta("A", 1, 1, 4, 1, "NEUTRAL"), jogador2);
+		tabuleiro.colocarCarta(4, new Carta("B", 1, 5, 1, 1, "NEUTRAL"), jogador2);
+		tabuleiro.colocarCarta(1, new Carta("C", 1, 0, 1, 1, "NEUTRAL"), jogador2);
+		tabuleiro.colocarCarta(5, new Carta("P", 3, 0, 0, 2, "NEUTRAL"), jogador1);
+
+		ConfiguracoesRegras config = configuracao(true);
+		config.setSame(false); // isola o Plus
+		MotorDeCaptura motor = new MotorDeCaptura(config);
+		List<Integer> viraram = motor.aplicar(tabuleiro, 5, jogador1);
+		
+		List<Integer> esperado = new ArrayList<Integer>();
+		esperado.add(2);
+		esperado.add(4);
+		esperado.add(1);
+		
+		verificar("Motor + Plus: retorna 2, 4 e a 1 por Combo", viraram.equals(esperado));
+		verificar("Motor + Plus: 2 passa a ser do J1", tabuleiro.getCelula(2).getDono() == jogador1);
+		verificar("Motor + Plus: 4 passa a ser do J1", tabuleiro.getCelula(4).getDono() == jogador1);
+		verificar("Motor + Plus: Combo captura a 1", tabuleiro.getCelula(1).getDono() == jogador1);
+		verificar("Motor + Plus: 1 captura em cadeia", motor.getCapturasEmCadeia() == 1);
+		verificar("Motor + Plus: registra 'Plus!'", motor.getRegrasAtivadas().contains("Plus!"));
+		verificar("Motor + Plus: J1 8 e J2 2", jogador1.getPontos() == 8 && jogador2.getPontos() == 2);
 	}
 
 	private static Tabuleiro montarCadeia(Jogador a, Jogador b) {
