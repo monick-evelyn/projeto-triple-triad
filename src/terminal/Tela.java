@@ -7,11 +7,8 @@ import modelo.Jogador;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Tela {
-	private static final Scanner leitor=new Scanner(System.in);
-
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
 		for (int i = 0; i < 3; i++) {
 			String[][] desenhos = new String[3][];
@@ -181,10 +178,8 @@ public class Tela {
 	
 	public static void telaDeTroca(Jogador proximo) {
 		limpar();
-		System.out.println("Jogador da vez: "+proximo.getNome());
-		System.out.println("Pressione Enter para continuar...");
-		
-		leitor.nextLine();
+		System.out.println("Jogador da vez: "+proximo.getNome());		
+		Entrada.aguardarEnter("Pressione Enter para continuar...");
 	}
 	
 	public static void mostrarMenu() {

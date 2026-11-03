@@ -45,5 +45,4 @@ public class Celula {
 		return false;
 	}
 	
-	
 }
