@@ -9,11 +9,13 @@ public class Jogador {
 	private String nome;
 	private List<Carta> mao;
 	private int pontos;
+	public static final int PONTOS_INICIAIS = 5;
+	public static final int TAMANHO_MAO = 5;
 
 	public Jogador(String nome) {
 		this.nome = nome;
 		this.mao = new ArrayList<Carta>();
-		this.pontos = 5;
+		this.pontos = PONTOS_INICIAIS;
 	}
 
 	public String getNome() {
@@ -21,7 +23,7 @@ public class Jogador {
 	}
 
 	public List<Carta> getMao() {
-		return mao;
+		return Collections.unmodifiableList(new ArrayList<>(mao));
 	}
 
 	public int getPontos() {
@@ -40,11 +42,11 @@ public class Jogador {
 		jogador1.mao.clear();
 		jogador2.mao.clear();
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < TAMANHO_MAO; i++) {
 			jogador1.mao.add(cartasEmbaralhadas.get(i));
 		}
 
-		for (int i = 5; i < 10; i++) {
+		for (int i = TAMANHO_MAO; i < 10; i++) {
 			jogador2.mao.add(cartasEmbaralhadas.get(i));
 		}
 	}
@@ -57,13 +59,26 @@ public class Jogador {
 		Carta carta = mao.remove(indice);
 		return carta;
 	}
-	
+
 	public void ganharPonto() {
-	    pontos++;
+		pontos++;
 	}
 
 	public void perderPonto() {
-	    pontos--;
+		pontos--;
 	}
 
+	public void receberMao(List<Carta> cartas) {
+		if (cartas == null) {
+			throw new IllegalArgumentException("ERRO: A lista não pode ser nula");
+		}
+		if (cartas.size() != TAMANHO_MAO) {
+			throw new IllegalArgumentException("ERRO: A mao deve ter 5 cartas");
+		}
+		this.mao = new ArrayList<>(cartas);
+	}
+
+	public int tamanhoMao() {
+		return this.mao.size();
+	}
 }
