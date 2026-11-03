@@ -9,49 +9,46 @@ public class Carta {
 	private int lado4; // esquerda
 
 	public Carta(String nome, int lado1, int lado2, int lado3, int lado4, String tipo) {
-		validarLado(lado1);
-		validarLado(lado2);
-		validarLado(lado3);
-		validarLado(lado4);
-		
+
 		this.nome = nome;
-		this.lado1 = lado1;
-		this.lado2 = lado2;
-		this.lado3 = lado3;
-		this.lado4 = lado4;
+		this.lado1 = validarValor(lado1);
+		this.lado2 = validarValor(lado2);
+		this.lado3 = validarValor(lado3);
+		this.lado4 = validarValor(lado4);
 		this.tipo = tipo;
 	}
-	
+
 	public Carta(String nome, int lado1, int lado2, int lado3, int lado4) {
-		validarLado(lado1);
-		validarLado(lado2);
-		validarLado(lado3);
-		validarLado(lado4);
-		
+
 		this.nome = nome;
-		this.lado1 = lado1;
-		this.lado2 = lado2;
-		this.lado3 = lado3;
-		this.lado4 = lado4;
+		this.lado1 = validarValor(lado1);
+		this.lado2 = validarValor(lado2);
+		this.lado3 = validarValor(lado3);
+		this.lado4 = validarValor(lado4);
+		this.tipo = "";
 	}
 
 	public int getLado(Direcao direcao) {
-		if (direcao == Direcao.CIMA) {
+		switch (direcao) {
+		case CIMA:
 			return lado1;
-		} else if (direcao == Direcao.DIREITA) {
+
+		case DIREITA:
 			return lado2;
-		} else if (direcao == Direcao.BAIXO) {
+		case BAIXO:
 			return lado3;
-		} else if (direcao == Direcao.ESQUERDA) {
+		case ESQUERDA:
 			return lado4;
+		default:
+			throw new IllegalArgumentException("ERRO: Não existe um lado para essa direção");
 		}
-		throw new IllegalArgumentException("ERRO: Não existe um lado para essa direção");
 	}
-	
-	private void validarLado(int lado) {
-		if (lado < 0 || lado > 10) {
+
+	private int validarValor(int valor) {
+		if (valor < 0 || valor > 10) {
 			throw new IllegalArgumentException("ERRO: O lado deve ser um número de 0 a 10.");
 		}
+		return valor;
 	}
 
 	public String getNome() {
@@ -60,6 +57,12 @@ public class Carta {
 
 	public String getTipo() {
 		return tipo;
+	}
+
+	@Override
+	public String toString() {
+		return "Carta: " + nome + " | Tipo: " + tipo + " | Cima: " + lado1 + " | Direita: " + lado2 + " | Baixo: "
+				+ lado3 + " | Esquerda: " + lado4;
 	}
 
 }
