@@ -80,7 +80,7 @@ public class Tabuleiro {
 		int contador = 0;
 		for (int i = 1; i < 10; i++) {
 			Celula celula = getCelula(i);
-			if (celula != null && celula.getDono().equals(jogador)) {
+			if (celula != null && celula.getDono()!=null && celula.getDono().equals(jogador)) {
 				contador++;
 			}
 		}
@@ -108,30 +108,30 @@ public class Tabuleiro {
 
 		Carta carta = celulaAtual.getCarta();
 		Jogador dono = celulaAtual.getDono();
-		
+
 		if (carta == null || dono == null) {
 			throw new Exception("A célula está incompleta.");
 		}
-		
+
 		int celulasCapturadas = 0;
 		Map<Direcao, Celula> celulasVizinhas = getVizinhas(posicao);
 
 		for (Map.Entry<Direcao, Celula> entrada : celulasVizinhas.entrySet()) {
 			Direcao direcao = entrada.getKey();
 			Celula vizinha = entrada.getValue();
-			
+
 			if (vizinha.getDono() != dono) {
-				int ladoCarta  = carta.getLado(direcao); //lado direito
-				int ladoVizinha = vizinha.getCarta().getLado(direcao.oposta()); //lado esquerdo
+				int ladoCarta = carta.getLado(direcao); // lado direito
+				int ladoVizinha = vizinha.getCarta().getLado(direcao.oposta()); // lado esquerdo
 
 				if (ladoCarta > ladoVizinha) {
 					Jogador antigoDono = vizinha.getDono();
-					
+
 					vizinha.trocarDono(dono);
-					
+
 					dono.ganharPonto();
 					antigoDono.perderPonto();
-					
+
 					celulasCapturadas++;
 				}
 			}

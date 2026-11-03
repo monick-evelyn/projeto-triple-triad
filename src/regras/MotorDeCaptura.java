@@ -67,7 +67,7 @@ public class MotorDeCaptura {
 		Jogador antigoDono = celula.getDono();
 
 		celula.trocarDono(jogador);
-
+		//Se quiser pode implementar atualizar pontuação da classe Jogo
 		jogador.ganharPonto();
 		antigoDono.perderPonto();
 	}

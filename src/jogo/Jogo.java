@@ -1,0 +1,134 @@
+package jogo;
+
+import java.util.List;
+import java.util.Random;
+
+import modelo.Carta;
+import modelo.Jogador;
+import modelo.Tabuleiro;
+import regras.MotorDeCaptura;
+import terminal.Entrada;
+import terminal.Tela;
+
+public class Jogo {
+	private Tabuleiro tabuleiro;
+	private Jogador jogador1;
+	private Jogador jogador2;
+	private Jogador jogadorAtual;
+	private ConfiguracoesRegras config;
+	private MotorDeCaptura motor;
+	private List<Carta> baralho;
+	private Random random;
+
+	public Jogo(String nome1, String nome2, List<Carta> baralho, ConfiguracoesRegras config, Random random) {
+		this.tabuleiro = new Tabuleiro();
+		this.jogador1 = new Jogador(nome1);
+		this.jogador2 = new Jogador(nome2);
+		this.config = config;
+		this.random = random;
+		this.baralho = baralho;
+		this.motor = new MotorDeCaptura(config);
+	}
+
+	private void sortearPrimeiro() {
+		int sorteado = random.nextInt(2);
+		if (sorteado == 0) {
+			jogadorAtual = jogador1;
+		} else {
+			jogadorAtual = jogador2;
+		}
+		System.out.println("O jogador que começa é: " + jogadorAtual.getNome());
+	}
+
+	public void distribuirCartas() {
+		Jogador.distribuirCartas(baralho, jogador1, jogador2);
+	}
+
+	public void trocarJogador() {
+		if (jogadorAtual == jogador1) {
+			jogadorAtual = jogador2;
+		} else {
+			jogadorAtual = jogador1;
+		}
+	}
+
+	private Jogador oponente() {
+		if (jogadorAtual == jogador1) {
+			return jogador2;
+		} else {
+			return jogador1;
+		}
+	}
+
+	private Carta escolherCarta() {
+		Tela.desenharMao(jogadorAtual);
+		int indice = Entrada.lerInteiro("Qual carta deseja escolher", 1, jogadorAtual.getMao().size());
+		return jogadorAtual.jogarCarta(indice - 1);
+	}
+
+	private int escolherCelula() {
+		int escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher", 1, 9);
+		while (!tabuleiro.getCelula(escolhaCelula).estaVazia()) {
+			System.out.println("A célula está ocupada, escolha outra");
+			escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher", 1, 9);
+		}
+		return escolhaCelula;
+	}
+
+	public void atualizarPontuacao(int capturas) {
+		for (int i = 0; i < capturas; i++) {
+			jogadorAtual.ganharPonto();
+			oponente().perderPonto();
+		}
+	}
+
+	private void jogarTurno() throws Exception {
+		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
+		Carta carta = escolherCarta();
+		int posicao = escolherCelula();
+		tabuleiro.colocarCarta(posicao, carta, jogadorAtual);
+		motor.aplicar(tabuleiro, posicao, jogadorAtual);
+		Tela.desenharPlacar(jogador1, jogador2);
+	}
+
+	public Jogador getVencedor() {
+		int cartasJ1 = tabuleiro.contarCelulas(jogador1);
+		int cartasJ2 = tabuleiro.contarCelulas(jogador2);
+		if (cartasJ1 > cartasJ2) {
+			return jogador1;
+		} else if (cartasJ1 < cartasJ2) {
+			return jogador2;
+		}
+		return null;
+	}
+
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+
+	public void iniciar() throws Exception {
+		distribuirCartas();
+		sortearPrimeiro();
+		while (!tabuleiro.estaCheio()) {
+			jogarTurno();
+			if (!tabuleiro.estaCheio()) {
+				trocarJogador();
+				Tela.telaDeTroca(jogadorAtual);
+			}
+		}
+		finalizar();
+	}
+	
+	public void finalizar() {
+		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
+		Tela.desenharPlacar(jogador1, jogador2);
+		Jogador vencedor=getVencedor();
+		if(vencedor==null) {
+			System.out.println("Empate!");
+		}else {
+			System.out.println("Parabénss "+vencedor.getNome()+" você venceu!");
+		}
+		
+	}
+
+}
