@@ -8,6 +8,8 @@ import modelo.Jogador;
 import java.util.ArrayList;
 import java.util.List;
 
+import jogo.ConfiguracoesRegras;
+ 
 public class Tela {
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
 		for (int i = 0; i < 3; i++) {
@@ -102,7 +104,7 @@ public class Tela {
 		for (int i = 0; i < mao.size(); i++) {
 			String[] desenho;
 			Carta carta = mao.get(i);
-			if (threeOpen && i < 3) {
+			if (threeOpen && jogador.estaAberta(carta)) {
 				desenho = DesenhoCarta.desenhar(carta);
 			} else {
 				desenho = desenharVerso();
