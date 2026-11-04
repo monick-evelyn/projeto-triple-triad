@@ -48,7 +48,7 @@ public class TesteMotorDeCaptura {
 
 		verificar("Básica: 6 > 2 captura a posição 4", viraram.equals(List.of(4)));
 		verificar("Básica: posição 4 passa a ser do Verde", t.getCelula(4).getDono() == verde);
-		verificar("Básica: Verde 6 e Azul 4", verde.getPontos() == 6 && azul.getPontos() == 4);
+		verificar("Básica: O motor não mexe nos pontos", verde.getPontos() == 5 && azul.getPontos() == 5);
 	}
 
 	private static void testarVizinhas() throws Exception {
@@ -96,7 +96,7 @@ public class TesteMotorDeCaptura {
 		List<Integer> viraram = motor.aplicar(t, 5, verde);
 
 		verificar("Duas regras: carta conta uma vez só", viraram.equals(List.of(4)));
-		verificar("Duas regras: ponto conta uma vez só", verde.getPontos() == 6 && azul.getPontos() == 4);
+		verificar("Duas regras: O motor não mexe nos pontos", verde.getPontos() == 5 && azul.getPontos() == 5);
 		verificar("Duas regras: regra ativada é registrada", motor.getRegrasAtivadas().equals(List.of("Repetida")));
 	}
 
@@ -116,7 +116,7 @@ public class TesteMotorDeCaptura {
 		MotorDeCaptura comCombo = new MotorDeCaptura(configuracao(true));
 		verificar("Combo: posições 4 e 1 viram", comCombo.aplicar(t2, 5, b2).equals(List.of(4, 1)));
 		verificar("Combo: 1 captura em cadeia", comCombo.getCapturasEmCadeia() == 1);
-		verificar("Combo: B 7 e A 3", b2.getPontos() == 7 && a2.getPontos() == 3);
+		verificar("Combo: O motor não mexe nos pontos", b2.getPontos() == 5 && a2.getPontos() == 5);
 
 		// Dois caminhos da cadeia chegam na posição 1: conta uma vez só
 		Jogador a3 = new Jogador("A");
@@ -128,7 +128,7 @@ public class TesteMotorDeCaptura {
 		t3.colocarCarta(5, new Carta("Centro", 5, 1, 1, 5, "NEUTRAL"), b3);
 		MotorDeCaptura doisCaminhos = new MotorDeCaptura(configuracao(true));
 		verificar("Dois caminhos: 3 cartas viram", doisCaminhos.aplicar(t3, 5, b3).size() == 3);
-		verificar("Dois caminhos: B 8 e A 2", b3.getPontos() == 8 && a3.getPontos() == 2);
+		verificar("Dois caminhos: O motor não mexe nos pontos", b3.getPontos() == 5 && a3.getPontos() == 5);
 	}
 	
 	private static void testarSame() throws Exception {
@@ -151,7 +151,7 @@ public class TesteMotorDeCaptura {
 		verificar("Motor + Same: retorna 1 e 5", viraram.equals(esperado));
 		verificar("Motor + Same: 1 passa a ser do jogador 1", tabuleiro.getCelula(1).getDono() == jogador1);
 		verificar("Motor + Same: 5 passa a ser do jogador 1", tabuleiro.getCelula(5).getDono() == jogador1);
-		verificar("Motor + Same: jogador 1 = 7 pontos e jogador 2 = 3 pontos", jogador1.getPontos() == 7 && jogador2.getPontos() == 3);
+		verificar("Motor + Same: O motor não mexe nos pontos", jogador1.getPontos() == 5 && jogador2.getPontos() == 5);
 		verificar("Motor + Same: registra 'Same!'", motor.getRegrasAtivadas().contains("Same!"));
 	}
 	
@@ -180,7 +180,7 @@ public class TesteMotorDeCaptura {
 		verificar("Motor + Plus: Combo captura a 1", tabuleiro.getCelula(1).getDono() == jogador1);
 		verificar("Motor + Plus: 1 captura em cadeia", motor.getCapturasEmCadeia() == 1);
 		verificar("Motor + Plus: registra 'Plus!'", motor.getRegrasAtivadas().contains("Plus!"));
-		verificar("Motor + Plus: J1 8 e J2 2", jogador1.getPontos() == 8 && jogador2.getPontos() == 2);
+		verificar("Motor + Plus: O motor não mexe nos pontos", jogador1.getPontos() == 5 && jogador2.getPontos() == 5);
 	}
 
 	private static Tabuleiro montarCadeia(Jogador a, Jogador b) {
