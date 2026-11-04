@@ -64,12 +64,11 @@ public class MotorDeCaptura {
 	}
 
 	private void trocarDono(Celula celula, Jogador jogador) {
-		Jogador antigoDono = celula.getDono();
-
+		//Jogador antigoDono = celula.getDono();
 		celula.trocarDono(jogador);
 		//Se quiser pode implementar atualizar pontuação da classe Jogo
-		jogador.ganharPonto();
-		antigoDono.perderPonto();
+		//jogador.ganharPonto();
+		//antigoDono.perderPonto();
 	}
 
 	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo) throws Exception {

@@ -104,19 +104,30 @@ public class Jogo {
 		return escolhaCelula;
 	}
 
-	public void atualizarPontuacao(int capturas) {
+	public void atualizarPontuacao(int capturas) throws IllegalAccessException {
 		for (int i = 0; i < capturas; i++) {
 			jogadorAtual.ganharPonto();
 			oponente().perderPonto();
+		}
+		if (jogador1.getPontos() + jogador2.getPontos() != 2 * Jogador.PONTOS_INICIAIS) {
+			throw new IllegalAccessException("Pontuação inválida: a soma dos pontos deve ser 10.");
 		}
 	}
 
 	private void jogarTurno() throws Exception {
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
+		
 		Carta carta = escolherCarta();
 		int posicao = escolherCelula();
+		
 		tabuleiro.colocarCarta(posicao, carta, jogadorAtual);
-		motor.aplicar(tabuleiro, posicao, jogadorAtual);
+		
+		List<Integer> capturadas = motor.aplicar(tabuleiro, posicao, jogadorAtual);
+		atualizarPontuacao(capturadas.size());
+		if (!capturadas.isEmpty()) {
+			Tela.mostrarJogada(jogadorAtual.getNome(), capturadas.size(), motor.getRegrasAtivadas(),
+					motor.getCapturasEmCadeia());
+		}
 		Tela.desenharPlacar(jogador1, jogador2);
 	}
 
