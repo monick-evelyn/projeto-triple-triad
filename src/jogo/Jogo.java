@@ -30,6 +30,34 @@ public class Jogo {
 		this.motor = new MotorDeCaptura(config);
 	}
 
+	
+	public Jogador getJogador1() {
+		return jogador1;
+	}
+
+	public Jogador getJogador2() {
+		return jogador2;
+	}
+
+	public Jogador getJogadorAtual() {
+		return jogadorAtual;
+	}
+	
+	public Jogador getVencedor() {
+		int cartasJ1 = tabuleiro.contarCelulas(jogador1);
+		int cartasJ2 = tabuleiro.contarCelulas(jogador2);
+		if (cartasJ1 > cartasJ2) {
+			return jogador1;
+		} else if (cartasJ1 < cartasJ2) {
+			return jogador2;
+		}
+		return null;
+	}
+
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+
 	private void sortearPrimeiro() {
 		int sorteado = random.nextInt(2);
 		if (sorteado == 0) {
@@ -90,21 +118,6 @@ public class Jogo {
 		tabuleiro.colocarCarta(posicao, carta, jogadorAtual);
 		motor.aplicar(tabuleiro, posicao, jogadorAtual);
 		Tela.desenharPlacar(jogador1, jogador2);
-	}
-
-	public Jogador getVencedor() {
-		int cartasJ1 = tabuleiro.contarCelulas(jogador1);
-		int cartasJ2 = tabuleiro.contarCelulas(jogador2);
-		if (cartasJ1 > cartasJ2) {
-			return jogador1;
-		} else if (cartasJ1 < cartasJ2) {
-			return jogador2;
-		}
-		return null;
-	}
-
-	public Tabuleiro getTabuleiro() {
-		return tabuleiro;
 	}
 
 	public void iniciar() throws Exception {
