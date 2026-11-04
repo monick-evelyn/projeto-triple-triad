@@ -30,7 +30,6 @@ public class Jogo {
 		this.motor = new MotorDeCaptura(config);
 	}
 
-	
 	public Jogador getJogador1() {
 		return jogador1;
 	}
@@ -42,7 +41,7 @@ public class Jogo {
 	public Jogador getJogadorAtual() {
 		return jogadorAtual;
 	}
-	
+
 	public Jogador getVencedor() {
 		int cartasJ1 = tabuleiro.contarCelulas(jogador1);
 		int cartasJ2 = tabuleiro.contarCelulas(jogador2);
@@ -116,12 +115,12 @@ public class Jogo {
 
 	private void jogarTurno() throws Exception {
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
-		
+
 		Carta carta = escolherCarta();
 		int posicao = escolherCelula();
-		
+
 		tabuleiro.colocarCarta(posicao, carta, jogadorAtual);
-		
+
 		List<Integer> capturadas = motor.aplicar(tabuleiro, posicao, jogadorAtual);
 		atualizarPontuacao(capturadas.size());
 		if (!capturadas.isEmpty()) {
@@ -133,7 +132,7 @@ public class Jogo {
 
 	public void iniciar() throws Exception {
 		distribuirCartas();
-		if(config.isThreeOpen()) {
+		if (config.isThreeOpen()) {
 			jogador1.abrirCartas(3, random);
 			jogador2.abrirCartas(3, random);
 		}
@@ -147,17 +146,17 @@ public class Jogo {
 		}
 		finalizar();
 	}
-	
+
 	public void finalizar() {
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
 		Tela.desenharPlacar(jogador1, jogador2);
-		Jogador vencedor=getVencedor();
-		if(vencedor==null) {
+		Jogador vencedor = getVencedor();
+		if (vencedor == null) {
 			System.out.println("Empate!");
-		}else {
-			System.out.println("Parabénss "+vencedor.getNome()+" você venceu!");
+		} else {
+			System.out.println("Parabénss " + vencedor.getNome() + " você venceu!");
 		}
-		
+
 	}
 
 }
