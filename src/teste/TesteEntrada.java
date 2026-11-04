@@ -2,7 +2,7 @@ package teste;
 
 import terminal.Entrada;
 
-public class testeEntrada {
+public class TesteEntrada {
 	public static void main(String[] args) {
 		int escolha = Entrada.lerInteiro("Escolha uma carta de 1 a 5:", 1, 5);
 		System.out.println("Você escolheu: " + escolha);

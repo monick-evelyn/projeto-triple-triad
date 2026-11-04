@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Carta;
-import modelo.Direcao;
 
 public class TesteJogador {
 
@@ -34,7 +33,7 @@ public class TesteJogador {
 		}
 
 		System.out.println("Teste jogar carta");
-		Carta jogada = clarissa.jogarCarta(-1);
+		clarissa.jogarCarta(-1);
 		for (Carta carta : clarissa.getMao()) {
 			System.out.println(carta.getNome());
 		}
