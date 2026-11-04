@@ -90,15 +90,15 @@ public class Jogo {
 	private Carta escolherCarta() {
 		Tela.desenharMaoOponente(oponente(), config.isThreeOpen());
 		Tela.desenharMao(jogadorAtual);
-		int indice = Entrada.lerInteiro("Qual carta deseja escolher", 1, jogadorAtual.getMao().size());
+		int indice = Entrada.lerInteiro("Qual carta deseja escolher: ", 1, jogadorAtual.getMao().size());
 		return jogadorAtual.jogarCarta(indice - 1);
 	}
 
 	private int escolherCelula() {
-		int escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher", 1, 9);
+		int escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher: ", 1, 9);
 		while (!tabuleiro.getCelula(escolhaCelula).estaVazia()) {
-			System.out.println("A célula está ocupada, escolha outra");
-			escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher", 1, 9);
+			System.out.println("A célula está ocupada, escolha outra: ");
+			escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher: ", 1, 9);
 		}
 		return escolhaCelula;
 	}
