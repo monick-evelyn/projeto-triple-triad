@@ -8,7 +8,7 @@ import jogo.ConfiguracoesRegras;
 import jogo.Jogo;
 import modelo.Carta;
 
-public class testeJogo {
+public class TesteRegraThreeOpen {
 	public static void main(String[] args) throws Exception {
 		List<Carta> baralho = new ArrayList<>();
 
@@ -24,10 +24,11 @@ public class testeJogo {
 		baralho.add(new Carta("Demônio", 7, 9, 6, 5));
 
 		ConfiguracoesRegras config = new ConfiguracoesRegras();
+		//Cartas do adversário viradas config.setThreeOpen(false);
+		config.setThreeOpen(true); //3 cartas normais
 		Random random = new Random(42);
 
 		Jogo jogo = new Jogo("Jogador 1", "Jogador 2", baralho, config, random);
-		jogo.iniciar();
+		jogo.iniciar(); 
 	}
-
 }

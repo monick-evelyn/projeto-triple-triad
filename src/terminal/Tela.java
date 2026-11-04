@@ -86,6 +86,7 @@ public class Tela {
 			String[] desenho = DesenhoCarta.desenhar(carta);
 			desenhos.add(desenho);
 		}
+		System.out.println("============================== MÃO ATUAL =================================");
 		for (int j = 0; j < 7; j++) {
 			for (int y = 0; y < desenhos.size(); y++) {
 				System.out.print(desenhos.get(y)[j] + " ");
@@ -111,6 +112,8 @@ public class Tela {
 			}
 			desenhos.add(desenho);
 		}
+		
+		System.out.println("============================ MÃO OPONENTE ===============================");
 		for (int j = 0; j < 7; j++) {
 			for (int y = 0; y < desenhos.size(); y++) {
 				System.out.print(desenhos.get(y)[j] + " ");

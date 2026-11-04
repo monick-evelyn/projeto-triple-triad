@@ -30,6 +30,33 @@ public class Jogo {
 		this.motor = new MotorDeCaptura(config);
 	}
 
+	public Jogador getJogador1() {
+		return jogador1;
+	}
+
+	public Jogador getJogador2() {
+		return jogador2;
+	}
+
+	public Jogador getJogadorAtual() {
+		return jogadorAtual;
+	}
+
+	public Jogador getVencedor() {
+		int cartasJ1 = tabuleiro.contarCelulas(jogador1);
+		int cartasJ2 = tabuleiro.contarCelulas(jogador2);
+		if (cartasJ1 > cartasJ2) {
+			return jogador1;
+		} else if (cartasJ1 < cartasJ2) {
+			return jogador2;
+		}
+		return null;
+	}
+
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+
 	private void sortearPrimeiro() {
 		int sorteado = random.nextInt(2);
 		if (sorteado == 0) {
@@ -63,53 +90,49 @@ public class Jogo {
 	private Carta escolherCarta() {
 		Tela.desenharMaoOponente(oponente(), config.isThreeOpen());
 		Tela.desenharMao(jogadorAtual);
-		int indice = Entrada.lerInteiro("Qual carta deseja escolher", 1, jogadorAtual.getMao().size());
+		int indice = Entrada.lerInteiro("Qual carta deseja escolher: ", 1, jogadorAtual.getMao().size());
 		return jogadorAtual.jogarCarta(indice - 1);
 	}
 
 	private int escolherCelula() {
-		int escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher", 1, 9);
+		int escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher: ", 1, 9);
 		while (!tabuleiro.getCelula(escolhaCelula).estaVazia()) {
-			System.out.println("A célula está ocupada, escolha outra");
-			escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher", 1, 9);
+			System.out.println("A célula está ocupada, escolha outra: ");
+			escolhaCelula = Entrada.lerInteiro("Qual célula deseja escolher: ", 1, 9);
 		}
 		return escolhaCelula;
 	}
 
-	public void atualizarPontuacao(int capturas) {
+	public void atualizarPontuacao(int capturas) throws IllegalAccessException {
 		for (int i = 0; i < capturas; i++) {
 			jogadorAtual.ganharPonto();
 			oponente().perderPonto();
+		}
+		if (jogador1.getPontos() + jogador2.getPontos() != 2 * Jogador.PONTOS_INICIAIS) {
+			throw new IllegalAccessException("Pontuação inválida: a soma dos pontos deve ser 10.");
 		}
 	}
 
 	private void jogarTurno() throws Exception {
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
+
 		Carta carta = escolherCarta();
 		int posicao = escolherCelula();
+
 		tabuleiro.colocarCarta(posicao, carta, jogadorAtual);
-		motor.aplicar(tabuleiro, posicao, jogadorAtual);
-		Tela.desenharPlacar(jogador1, jogador2);
-	}
 
-	public Jogador getVencedor() {
-		int cartasJ1 = tabuleiro.contarCelulas(jogador1);
-		int cartasJ2 = tabuleiro.contarCelulas(jogador2);
-		if (cartasJ1 > cartasJ2) {
-			return jogador1;
-		} else if (cartasJ1 < cartasJ2) {
-			return jogador2;
+		List<Integer> capturadas = motor.aplicar(tabuleiro, posicao, jogadorAtual);
+		atualizarPontuacao(capturadas.size());
+		if (!capturadas.isEmpty()) {
+			Tela.mostrarJogada(jogadorAtual.getNome(), capturadas.size(), motor.getRegrasAtivadas(),
+					motor.getCapturasEmCadeia());
 		}
-		return null;
-	}
-
-	public Tabuleiro getTabuleiro() {
-		return tabuleiro;
+		Tela.desenharPlacar(jogador1, jogador2);
 	}
 
 	public void iniciar() throws Exception {
 		distribuirCartas();
-		if(config.isThreeOpen()) {
+		if (config.isThreeOpen()) {
 			jogador1.abrirCartas(3, random);
 			jogador2.abrirCartas(3, random);
 		}
@@ -123,17 +146,17 @@ public class Jogo {
 		}
 		finalizar();
 	}
-	
+
 	public void finalizar() {
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
 		Tela.desenharPlacar(jogador1, jogador2);
-		Jogador vencedor=getVencedor();
-		if(vencedor==null) {
+		Jogador vencedor = getVencedor();
+		if (vencedor == null) {
 			System.out.println("Empate!");
-		}else {
-			System.out.println("Parabénss "+vencedor.getNome()+" você venceu!");
+		} else {
+			System.out.println("Parabénss " + vencedor.getNome() + " você venceu!");
 		}
-		
+
 	}
 
 }

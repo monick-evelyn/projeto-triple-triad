@@ -112,7 +112,7 @@ public class TesteCaptura {
 		MotorDeCaptura motor1 = new MotorDeCaptura(configuracao(false));
 		verificar("Motor: retorna a posição capturada", motor1.aplicar(tabuleiro1, 5, bea).equals(List.of(4)));
 		verificar("Motor: troca o dono", tabuleiro1.getCelula(4).getDono() == bea);
-		verificar("Motor: B 6 e A 4", bea.getPontos() == 6 && ana.getPontos() == 4);
+		verificar("Motor: motor sozinho não muda pontos", bea.getPontos() == 5 && ana.getPontos() == 5);
 		verificar("Motor: básica não entra nas regras ativadas", motor1.getRegrasAtivadas().isEmpty());
 
 		// 2. Nenhuma captura
@@ -123,7 +123,7 @@ public class TesteCaptura {
 		tabuleiro2.colocarCarta(5, carta(1, 1, 1, 2), b2);
 		MotorDeCaptura motor2 = new MotorDeCaptura(configuracao(true));
 		verificar("Motor: sem captura retorna lista vazia", motor2.aplicar(tabuleiro2, 5, b2).isEmpty());
-		verificar("Motor: sem captura não muda os pontos", a2.getPontos() == 5 && b2.getPontos() == 5);
+		verificar("Motor:  não muda os pontos", a2.getPontos() == 5 && b2.getPontos() == 5);
 
 		// 3. Célula sem carta
 		try {
@@ -144,7 +144,7 @@ public class TesteCaptura {
 		MotorDeCaptura motor1 = new MotorDeCaptura(configuracao(false, regra("Repetida", 4)));
 		verificarSemErro("Motor: carta de duas regras conta uma vez só", () -> {
 			return motor1.aplicar(tabuleiro1, 5, b1).equals(List.of(4))
-					&& b1.getPontos() == 6 && a1.getPontos() == 4
+					&& b1.getPontos() == 5 && a1.getPontos() == 5
 					&& motor1.getRegrasAtivadas().equals(List.of("Repetida"));
 		});
 
@@ -159,7 +159,7 @@ public class TesteCaptura {
 		verificarSemErro("Motor: soma as capturas da regra com as da básica", () -> {
 			return motor2.aplicar(tabuleiro2, 5, b2).equals(List.of(4, 8))
 					&& tabuleiro2.getCelula(8).getDono() == b2
-					&& b2.getPontos() == 7 && a2.getPontos() == 3;
+					&& b2.getPontos() == 5 && a2.getPontos() == 5;
 		});
 
 		// 3. Regra sem captura não aparece como ativada
@@ -184,7 +184,7 @@ public class TesteCaptura {
 		MotorDeCaptura motor4 = new MotorDeCaptura(configuracao(false, regra("Mista", 6, 8)));
 		verificarSemErro("Motor: carta do próprio jogador não conta como captura", () -> {
 			return motor4.aplicar(tabuleiro4, 5, b4).equals(List.of(8))
-					&& b4.getPontos() == 6 && a4.getPontos() == 4;
+					&& b4.getPontos() == 5 && a4.getPontos() == 5;
 		});
 	}
 
@@ -204,7 +204,7 @@ public class TesteCaptura {
 		MotorDeCaptura comCombo = new MotorDeCaptura(configuracao(true));
 		verificar("Combo ligado: a cadeia segue até o fim", comCombo.aplicar(t2, 5, b2).equals(List.of(4, 1, 2)));
 		verificar("Combo ligado: 2 capturas em cadeia", comCombo.getCapturasEmCadeia() == 2);
-		verificar("Combo ligado: B 8 e A 2", b2.getPontos() == 8 && a2.getPontos() == 2);
+		verificar("Combo ligado: motor nao muda pontos", b2.getPontos() == 5 && a2.getPontos() == 5);
 
 		// 3. Dois caminhos chegam na mesma carta
 		Jogador a3 = new Jogador("A");
@@ -215,7 +215,7 @@ public class TesteCaptura {
 		t3.colocarCarta(4, carta(9, 1, 1, 1), a3);
 		t3.colocarCarta(5, carta(5, 1, 1, 5), b3);
 		verificar("Combo: dois caminhos contam a carta uma vez só", comCombo.aplicar(t3, 5, b3).size() == 3);
-		verificar("Combo: dois caminhos dão B 8 e A 2", b3.getPontos() == 8 && a3.getPontos() == 2);
+		verificar("Combo: motor nao muda pontos", b3.getPontos() == 5 && a3.getPontos() == 5);
 
 		// 4. O motor zera o resultado da jogada anterior
 		Jogador b4 = new Jogador("B");
