@@ -11,11 +11,15 @@ public class Jogador {
 	private int pontos;
 	public static final int PONTOS_INICIAIS = 5;
 	public static final int TAMANHO_MAO = 5;
+	private List<Carta> abertas;
+	private boolean cartasAbertasDefinidas;
 
 	public Jogador(String nome) {
 		this.nome = nome;
 		this.mao = new ArrayList<Carta>();
 		this.pontos = PONTOS_INICIAIS;
+		this.abertas = new ArrayList<Carta>();
+		this.cartasAbertasDefinidas = false;
 	}
 
 	public String getNome() {
@@ -49,6 +53,10 @@ public class Jogador {
 		for (int i = TAMANHO_MAO; i < 10; i++) {
 			jogador2.mao.add(cartasEmbaralhadas.get(i));
 		}
+		jogador1.abertas.clear();
+		jogador2.abertas.clear();
+		jogador1.cartasAbertasDefinidas = false;
+		jogador2.cartasAbertasDefinidas = false;
 	}
 
 	public Carta jogarCarta(int indice) {
@@ -80,5 +88,28 @@ public class Jogador {
 
 	public int tamanhoMao() {
 		return this.mao.size();
+	}
+
+	public void abrirCartas(int quantidade, Random random) {
+		if (random == null || quantidade < 0 || quantidade > this.tamanhoMao()) {
+			throw new IllegalArgumentException("ERRO: Os dados inseridos são inválidos");
+		}
+
+		if (this.cartasAbertasDefinidas) {
+			return;
+		}
+		List<Carta> cartasSorteadas = new ArrayList<>(mao);
+		Collections.shuffle(cartasSorteadas, random);
+		for (int i = 0; i < quantidade; i++) {
+			abertas.add(cartasSorteadas.get(i));
+		}
+		this.cartasAbertasDefinidas = true;
+	}
+
+	public boolean estaAberta(Carta carta) {
+		if (abertas.contains(carta)) {
+			return true;
+		}
+		return false;
 	}
 }

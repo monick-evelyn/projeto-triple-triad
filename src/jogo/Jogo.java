@@ -61,6 +61,7 @@ public class Jogo {
 	}
 
 	private Carta escolherCarta() {
+		Tela.desenharMaoOponente(oponente(), config.isThreeOpen());
 		Tela.desenharMao(jogadorAtual);
 		int indice = Entrada.lerInteiro("Qual carta deseja escolher", 1, jogadorAtual.getMao().size());
 		return jogadorAtual.jogarCarta(indice - 1);
@@ -108,6 +109,10 @@ public class Jogo {
 
 	public void iniciar() throws Exception {
 		distribuirCartas();
+		if(config.isThreeOpen()) {
+			jogador1.abrirCartas(3, random);
+			jogador2.abrirCartas(3, random);
+		}
 		sortearPrimeiro();
 		while (!tabuleiro.estaCheio()) {
 			jogarTurno();
