@@ -13,7 +13,8 @@ Projeto desenvolvido em Java para a disciplina de **Paradigmas de Programação*
 
 ## ✨ Sobre o projeto
 
-Triple Trip é uma implementação jogável de **Triple Triad** (inspirado em Final Fantasy VIII) feita com foco em aplicar conceitos de orientação a objetos. A partida acontece em um tabuleiro 3×3, com dois jogadores e cartas cujos valores determinam as capturas.
+Triple Trip é uma implementação jogável de **Triple Triad** (inspirado em Final Fantasy VIII) feita com foco em aplicar conceitos de orientação a objetos. A partida acontece em um tabuleiro 3×3, com dois jogadores e cartas cujos valores determinam as capturas.\
+**IDE Utilizada**: Eclipse
 
 | 🎓 Componente curricular | 👩‍🎓 Curso |
 | --- | --- |
