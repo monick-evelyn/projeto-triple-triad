@@ -15,7 +15,7 @@ public class Main {
 		int opcao;
 		do {
 			Tela.mostrarMenu();
-			opcao = Entrada.lerInteiro("Escolha uma opção:", 1, 3);
+			opcao = Entrada.lerInteiro("Escolha uma opção: ", 1, 3);
 			switch (opcao) {
 			case 1:
 				System.out.println(

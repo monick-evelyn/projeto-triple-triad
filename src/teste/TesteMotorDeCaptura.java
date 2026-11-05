@@ -11,7 +11,6 @@ import modelo.Jogador;
 import modelo.Tabuleiro;
 import regras.MotorDeCaptura;
 import regras.Regra;
-import regras.RegraBasica;
 
 public class TesteMotorDeCaptura {
 

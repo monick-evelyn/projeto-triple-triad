@@ -7,7 +7,7 @@ public class Entrada {
 
 	public static int lerInteiro(String pergunta, int min, int max) {
 		while (true) {
-			System.out.println(pergunta);
+			System.out.print(pergunta);
 			String resposta = leitor.nextLine();
 
 			try {
@@ -15,16 +15,16 @@ public class Entrada {
 				if (numero >= min && numero <= max) {
 					return numero;
 				}
-				System.out.println("Número inválido, digite novamente!");
+				System.out.print("Número inválido, digite novamente: ");
 			} catch (NumberFormatException e) {
-				System.out.println("Entrada inválida! Digite um número inteiro.");
+				System.out.print("Entrada inválida! Digite um número inteiro: ");
 			}
 		}
 	}
 
 	public static boolean lerSimNao(String pergunta) {
 		while (true) {
-			System.out.println(pergunta);
+			System.out.print(pergunta);
 			String resposta = leitor.nextLine().trim().toLowerCase();
 
 			if (resposta.equalsIgnoreCase("Sim") || resposta.equalsIgnoreCase("S")) {
@@ -33,26 +33,26 @@ public class Entrada {
 					|| resposta.equalsIgnoreCase("Nao")) {
 				return false;
 			} else {
-				System.out.println("Resposta inválida, digite novamente!");
+				System.out.print("Resposta inválida, digite novamente: ");
 			}
 		}
 	}
 
 	public static String lerTexto(String pergunta) {
 		while (true) {
-			System.out.println(pergunta);
+			System.out.print(pergunta);
 			String resposta = leitor.nextLine().trim();
 
 			if (!resposta.isEmpty()) {
 				return resposta;
 			}
-			System.out.println("A resposta está inválida. Tente novamente!");
+			System.out.print("A resposta está inválida. Tente novamente: ");
 		}
 
 	}
 
 	public static void aguardarEnter(String pergunta) {
-		System.out.println(pergunta);
+		System.out.print(pergunta);
 		leitor.nextLine();
 	}
 }
