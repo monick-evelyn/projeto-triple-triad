@@ -2,13 +2,16 @@ package teste;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import jogo.ConfiguracoesRegras;
+import jogo.Jogo;
 import modelo.Carta;
 import modelo.Jogador;
 import modelo.Tabuleiro;
 import regras.MotorDeCaptura;
 import regras.Regra;
+import regras.RegraBasica;
 
 public class TesteMotorDeCaptura {
 
@@ -21,6 +24,7 @@ public class TesteMotorDeCaptura {
 		testarCombo();
 		testarSame();
 		testarPlus();
+		testarPontuacaoCombo();
 
 		System.out.println();
 		if (falhas == 0) {
@@ -129,8 +133,24 @@ public class TesteMotorDeCaptura {
 		MotorDeCaptura doisCaminhos = new MotorDeCaptura(configuracao(true));
 		verificar("Dois caminhos: 3 cartas viram", doisCaminhos.aplicar(t3, 5, b3).size() == 3);
 		verificar("Dois caminhos: O motor não mexe nos pontos", b3.getPontos() == 5 && a3.getPontos() == 5);
+
+		// Cenário testado: 3 cartas do oponente em linha viram em cadeia
+		Jogador a4 = new Jogador("A");
+		Jogador b4 = new Jogador("B");
+		Tabuleiro t4 = new Tabuleiro();
+		t4.colocarCarta(1, new Carta("Alvo 2", 1, 1, 1, 1, "NEUTRAL"), a4);
+		t4.colocarCarta(2, new Carta("Elo 2", 1, 1, 1, 9, "NEUTRAL"), a4);
+		t4.colocarCarta(5, new Carta("Elo 1", 5, 1, 1, 1, "NEUTRAL"), a4);
+		t4.colocarCarta(6, new Carta("Atacante", 1, 1, 6, 7, "NEUTRAL"), b4);
+		MotorDeCaptura tresCartas = new MotorDeCaptura(configuracao(true));
+		List<Integer> resultado = tresCartas.aplicar(t4, 6, b4);
+		verificar("Combo: três cartas viram em sequÊncia", resultado.equals(List.of(5, 2, 1)));
+		verificar("Combo: duas capturas acontecerem em cadeia", tresCartas.getCapturasEmCadeia() == 2);
+		verificar("Combo: trÊs cartas passam a ser do jogador B",
+				t4.getCelula(5).getDono() == b4 && t4.getCelula(2).getDono() == b4 && t4.getCelula(1).getDono() == b4);
+		verificar("Combo: não existem posições duplicadas", resultado.size() == resultado.stream().distinct().count());
 	}
-	
+
 	private static void testarSame() throws Exception {
 		Jogador jogador1 = new Jogador("Monick");
 		Jogador jogador2 = new Jogador("Clarissa");
@@ -147,14 +167,14 @@ public class TesteMotorDeCaptura {
 		List<Integer> esperado = new ArrayList<Integer>();
 		esperado.add(1);
 		esperado.add(5);
-		
+
 		verificar("Motor + Same: retorna 1 e 5", viraram.equals(esperado));
 		verificar("Motor + Same: 1 passa a ser do jogador 1", tabuleiro.getCelula(1).getDono() == jogador1);
 		verificar("Motor + Same: 5 passa a ser do jogador 1", tabuleiro.getCelula(5).getDono() == jogador1);
 		verificar("Motor + Same: O motor não mexe nos pontos", jogador1.getPontos() == 5 && jogador2.getPontos() == 5);
 		verificar("Motor + Same: registra 'Same!'", motor.getRegrasAtivadas().contains("Same!"));
 	}
-	
+
 	private static void testarPlus() throws Exception {
 		Jogador jogador1 = new Jogador("J1");
 		Jogador jogador2 = new Jogador("J2");
@@ -168,12 +188,12 @@ public class TesteMotorDeCaptura {
 		config.setSame(false); // isola o Plus
 		MotorDeCaptura motor = new MotorDeCaptura(config);
 		List<Integer> viraram = motor.aplicar(tabuleiro, 5, jogador1);
-		
+
 		List<Integer> esperado = new ArrayList<Integer>();
 		esperado.add(2);
 		esperado.add(4);
 		esperado.add(1);
-		
+
 		verificar("Motor + Plus: retorna 2, 4 e a 1 por Combo", viraram.equals(esperado));
 		verificar("Motor + Plus: 2 passa a ser do J1", tabuleiro.getCelula(2).getDono() == jogador1);
 		verificar("Motor + Plus: 4 passa a ser do J1", tabuleiro.getCelula(4).getDono() == jogador1);
@@ -198,6 +218,18 @@ public class TesteMotorDeCaptura {
 			System.out.println("[FALHOU] " + descricao);
 			falhas++;
 		}
+	}
+
+	private static void testarPontuacaoCombo() throws Exception {
+		ConfiguracoesRegras config = new ConfiguracoesRegras();
+		Jogo jogo = new Jogo("Clarissa", "Monick", new ArrayList<Carta>(), config, new Random(42));
+		Jogador Clarissa = jogo.getJogador1();
+		Jogador Monick = jogo.getJogador2();
+		jogo.trocarJogador();
+		jogo.atualizarPontuacao(3);
+		verificar("Pontuação: Clarissa recebe 3 pontos", Clarissa.getPontos() == 8);
+		verificar("Pontuação: Monick perde 3 pontos", Monick.getPontos() == 2);
+		verificar("Pontuação: continua sendo 10", Clarissa.getPontos() + Monick.getPontos() == 10);
 	}
 
 }

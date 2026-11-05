@@ -114,6 +114,7 @@ public class Jogo {
 	}
 
 	private void jogarTurno() throws Exception {
+		Tela.mostrarRegras(config);
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
 
 		Carta carta = escolherCarta();
