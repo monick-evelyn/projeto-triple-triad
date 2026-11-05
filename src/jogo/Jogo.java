@@ -127,7 +127,10 @@ public class Jogo {
 			Tela.mostrarJogada(jogadorAtual.getNome(), capturadas.size(), motor.getRegrasAtivadas(),
 					motor.getCapturasEmCadeia());
 		}
-		Tela.desenharPlacar(jogador1, jogador2);
+		
+		if (jogador1.getPontos() != 10 && jogador2.getPontos() != 10) {
+			Tela.desenharPlacar(jogador1, jogador2);
+		}
 	}
 
 	public void iniciar() throws Exception {
@@ -148,15 +151,7 @@ public class Jogo {
 	}
 
 	public void finalizar() {
-		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
-		Tela.desenharPlacar(jogador1, jogador2);
-		Jogador vencedor = getVencedor();
-		if (vencedor == null) {
-			System.out.println("Empate!");
-		} else {
-			System.out.println("Parabénss " + vencedor.getNome() + " você venceu!");
-		}
-
+		Tela.mostrarResultado(tabuleiro, jogador1, jogador2, getVencedor());
 	}
 
 }

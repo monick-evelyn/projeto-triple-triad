@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jogo.ConfiguracoesRegras;
+import jogo.Jogo;
  
 public class Tela {
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
@@ -242,6 +243,7 @@ public class Tela {
 			}
 			mostrarCapturas += regras.get(i);
 		}
+		
 		System.out.println(
 				"======================================== JOGADA ATUAL ========================================");
 		System.out.println("Nome: " + nome + " capturou " + capturas + " cartas (" + mostrarCapturas + "!)");
@@ -250,21 +252,15 @@ public class Tela {
 				"==============================================================================================");
 	}
 
-	public static void mostrarResultado(Tabuleiro t, Jogador j1, Jogador j2) {
-		int pontosJ1 = j1.getPontos();
-		int pontosJ2 = j2.getPontos();
-		System.out
-				.println("======================================== RESULTADO ========================================");
+	public static void mostrarResultado(Tabuleiro t, Jogador j1, Jogador j2, Jogador vencedor) {
+		System.out.println("======================================== RESULTADO ========================================");
 		desenharTabuleiro(t, j1, j2);
-		if (pontosJ1 > pontosJ2) {
-			System.out.println("Parabénss " + j1.getNome() + " você ganhou esta rodada!");
-		} else if (pontosJ1 == pontosJ2) {
-			System.out.println("Parabénss vocês dois empataram!!");
-		} else {
-			System.out.println("Parabénss " + j2.getNome() + " você ganhou esta rodada!");
-		}
-		System.out
-				.println("===========================================================================================");
+		if (vencedor == null) {
+	        System.out.println("Empate!");
+	    } else {
+	        System.out.println("Parabéns, " + vencedor.getNome() + "! Você venceu.");
+	    }
+		System.out.println("===========================================================================================");
 	}
 
 }

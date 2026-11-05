@@ -53,7 +53,7 @@ public class TesteTela {
 		//regras.add("Plus");
 
 		//Tela.mostrarJogada("Ana", 2, regras, 1);
-		Tela.mostrarResultado(tabuleiro, j1, j2);
+		Tela.mostrarResultado(tabuleiro, j1, j2, j1);
 
 		
 		
