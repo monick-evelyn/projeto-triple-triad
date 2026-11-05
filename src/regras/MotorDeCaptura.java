@@ -72,15 +72,11 @@ public class MotorDeCaptura {
 	}
 
 	private void trocarDono(Celula celula, Jogador jogador) {
-		// Jogador antigoDono = celula.getDono();
 		celula.trocarDono(jogador);
-		// Se quiser pode implementar atualizar pontuação da classe Jogo
-		// jogador.ganharPonto();
-		// antigoDono.perderPonto();
 	}
 
-	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo)
-			throws Exception {
+	/*
+	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo) throws Exception {
 		for (int vizinha : basica.capturas(tabuleiro, posicao, jogador)) {
 			Celula celula = tabuleiro.getCelula(vizinha);
 

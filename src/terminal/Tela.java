@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jogo.ConfiguracoesRegras;
-import jogo.Jogo;
  
 public class Tela {
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
@@ -151,6 +150,7 @@ public class Tela {
 		System.out.printf("|%-50s|\n", lineJ2);
 		System.out.println("|                                                  |");
 		System.out.println(borda);
+		Entrada.aguardarEnter("Pressione Enter para continuar...");
 	}
 
 	// ESTOU USANDO O ECLIPSE, NÃO FUNCIONA OUTROS COMANDOS PARA LIMPAR, APENAS
@@ -255,6 +255,7 @@ public class Tela {
 			System.out.println(
 					"==============================================================================================");
 		}
+		Entrada.aguardarEnter("Pressione Enter para continuar...");
 
 	}
 
