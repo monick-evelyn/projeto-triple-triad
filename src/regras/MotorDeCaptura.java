@@ -16,6 +16,7 @@ public class MotorDeCaptura {
 	private List<String> regrasAtivadas = new ArrayList<>();
 	private int capturasEmCadeia;
 	private final Regra basica = new RegraBasica();
+	private final RegraCombo regraCombo = new RegraCombo();
 
 	public MotorDeCaptura(ConfiguracoesRegras config) {
 		this.regras = config.regrasAtivas();
@@ -40,9 +41,9 @@ public class MotorDeCaptura {
 
 		List<Integer> viraramCombo = new ArrayList<>(capturadas);
 		if (combo == true) {
-			for (int capturada : capturadas) {
-				capturarEmCadeia(tabuleiro, capturada, jogador, viraramCombo);
-			}
+			List<Integer> novasCapturas = regraCombo.cascata(tabuleiro, new ArrayList<>(capturadas), jogador);
+			viraramCombo.addAll(novasCapturas);
+			capturasEmCadeia = novasCapturas.size();
 		}
 		return viraramCombo;
 	}
@@ -64,14 +65,15 @@ public class MotorDeCaptura {
 	}
 
 	private void trocarDono(Celula celula, Jogador jogador) {
-		//Jogador antigoDono = celula.getDono();
+		// Jogador antigoDono = celula.getDono();
 		celula.trocarDono(jogador);
-		//Se quiser pode implementar atualizar pontuação da classe Jogo
-		//jogador.ganharPonto();
-		//antigoDono.perderPonto();
+		// Se quiser pode implementar atualizar pontuação da classe Jogo
+		// jogador.ganharPonto();
+		// antigoDono.perderPonto();
 	}
 
-	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo) throws Exception {
+	/*private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo)
+			throws Exception {
 		for (int vizinha : basica.capturas(tabuleiro, posicao, jogador)) {
 			Celula celula = tabuleiro.getCelula(vizinha);
 
@@ -82,5 +84,5 @@ public class MotorDeCaptura {
 				capturarEmCadeia(tabuleiro, vizinha, jogador, viraramCombo);
 			}
 		}
-	}
+	}*/
 }
