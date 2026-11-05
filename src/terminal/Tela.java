@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jogo.ConfiguracoesRegras;
- 
+
 public class Tela {
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
 		for (int i = 0; i < 3; i++) {
@@ -112,7 +112,7 @@ public class Tela {
 			}
 			desenhos.add(desenho);
 		}
-		
+
 		System.out.println("============================ MÃO OPONENTE ===============================");
 		for (int j = 0; j < 7; j++) {
 			for (int y = 0; y < desenhos.size(); y++) {
@@ -156,24 +156,20 @@ public class Tela {
 	// MANUALMENTE
 	// VOU ANEXAR OUTRAS OPÇÕES QUE PODEM SER USADAS, GERADAS PELO GEMINI
 
-	/*public static void limparTela() {
-		try {
-			String os = System.getProperty("os.name").toLowerCase();
+	/*
+	 * public static void limparTela() { try { String os =
+	 * System.getProperty("os.name").toLowerCase();
+	 * 
+	 * if (os.contains("win")) { new ProcessBuilder("cmd", "/c",
+	 * "cls").inheritIO().start().waitFor(); } else { new
+	 * ProcessBuilder("clear").inheritIO().start().waitFor(); } } catch (Exception
+	 * e) { System.out.println("Não foi possível limpar o terminal."); } }
+	 */
 
-			if (os.contains("win")) {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-			} else {
-				new ProcessBuilder("clear").inheritIO().start().waitFor();
-			}
-		} catch (Exception e) {
-			System.out.println("Não foi possível limpar o terminal.");
-		}
-	}*/
-
-	/*public static void limparTel2a() {
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
-	}*/
+	/*
+	 * public static void limparTel2a() { System.out.print("\033[H\033[2J");
+	 * System.out.flush(); }
+	 */
 
 	public static void limpar() {
 		for (int i = 0; i < 50; i++) {
@@ -183,7 +179,7 @@ public class Tela {
 
 	public static void telaDeTroca(Jogador proximo) {
 		limpar();
-		System.out.println("Jogador da vez: "+proximo.getNome());		
+		System.out.println("Jogador da vez: " + proximo.getNome());
 		Entrada.aguardarEnter("Pressione Enter para continuar...");
 	}
 
@@ -193,8 +189,7 @@ public class Tela {
 		System.out.println("|==================================================|");
 		System.out.println("|  [1] Iniciar jogo                                |");
 		System.out.println("|  [2] Consultar regras                            |");
-		System.out.println("|  [3] Ver instruções do jogo                      |");
-		System.out.println("|  [4] Sair                                        |");
+		System.out.println("|  [3] Sair                                        |");
 		System.out.println("+--------------------------------------------------+");
 	}
 
@@ -219,14 +214,17 @@ public class Tela {
 			System.out.println("[ SAME ]");
 			System.out.println(
 					"• Se 2 ou mais lados encostados forem iguais, as cartas adversárias envolvidas são capturadas.\n");
-		} else if (regras.isPlus()) {
+		}
+		if (regras.isPlus()) {
 			System.out.println("[ PLUS ]");
 			System.out.println(
 					"• Se 2 ou mais pares de lados encostados tiverem a mesma soma, as cartas são capturadas.\n");
-		} else if (regras.isCombo()) {
+		}
+		if (regras.isCombo()) {
 			System.out.println("[ COMBO ]");
 			System.out.println("• Cartas recém-capturadas capturam vizinhas mais fracas, em cadeia.\n");
-		} else if (regras.isThreeOpen()) {
+		}
+		if (regras.isThreeOpen()) {
 			System.out.println("[ THREE OPEN ]");
 			System.out.println("• Três cartas da mão de cada jogador ficam visíveis ao oponente.\n");
 		}
@@ -242,12 +240,21 @@ public class Tela {
 			}
 			mostrarCapturas += regras.get(i);
 		}
-		System.out.println(
-				"======================================== JOGADA ATUAL ========================================");
-		System.out.println("Nome: " + nome + " capturou " + capturas + " cartas (" + mostrarCapturas + "!)");
-		System.out.println("Capturas em cadeia: " + emCadeia);
-		System.out.println(
-				"==============================================================================================");
+		if (capturas == 0) {
+			System.out.println(
+					"======================================== JOGADA ATUAL ========================================");
+			System.out.println(nome + " jogou uma carta, mas não conseguiu capturar nenhuma.");
+			System.out.println(
+					"==============================================================================================");
+		} else {
+			System.out.println(
+					"======================================== JOGADA ATUAL ========================================");
+			System.out.println("Nome: " + nome + " capturou " + capturas + " cartas (" + mostrarCapturas + "!)");
+			System.out.println("Capturas em cadeia: " + emCadeia);
+			System.out.println(
+					"==============================================================================================");
+		}
+
 	}
 
 	public static void mostrarResultado(Tabuleiro t, Jogador j1, Jogador j2) {

@@ -26,8 +26,12 @@ public class MotorDeCaptura {
 		regrasAtivadas = new ArrayList<>();
 		capturasEmCadeia = 0;
 
+		List<Integer> capturasBasicas = basica.capturas(tabuleiro, posicao, jogador);
 		Set<Integer> capturadas = new LinkedHashSet<>(basica.capturas(tabuleiro, posicao, jogador));
 
+		if (!capturasBasicas.isEmpty()) {
+			regrasAtivadas.add("Básica");
+		}
 		for (Regra regra : regras) {
 			List<Integer> excucoesDaRegra = regra.capturas(tabuleiro, posicao, jogador);
 			if (!excucoesDaRegra.isEmpty()) {
@@ -43,6 +47,9 @@ public class MotorDeCaptura {
 			for (int capturada : capturadas) {
 				capturarEmCadeia(tabuleiro, capturada, jogador, viraramCombo);
 			}
+		}
+		if (capturasEmCadeia > 0) {
+			regrasAtivadas.add("Combo");
 		}
 		return viraramCombo;
 	}
@@ -64,14 +71,15 @@ public class MotorDeCaptura {
 	}
 
 	private void trocarDono(Celula celula, Jogador jogador) {
-		//Jogador antigoDono = celula.getDono();
+		// Jogador antigoDono = celula.getDono();
 		celula.trocarDono(jogador);
-		//Se quiser pode implementar atualizar pontuação da classe Jogo
-		//jogador.ganharPonto();
-		//antigoDono.perderPonto();
+		// Se quiser pode implementar atualizar pontuação da classe Jogo
+		// jogador.ganharPonto();
+		// antigoDono.perderPonto();
 	}
 
-	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo) throws Exception {
+	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo)
+			throws Exception {
 		for (int vizinha : basica.capturas(tabuleiro, posicao, jogador)) {
 			Celula celula = tabuleiro.getCelula(vizinha);
 
