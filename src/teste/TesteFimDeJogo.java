@@ -15,6 +15,7 @@ public class TesteFimDeJogo {
 
 	public static void main(String[] args) throws Exception {
 		testarVitoriaJogador1SemCapturas();
+		testarEmpateDePontosNaoEmpataOJogo();
 
 		System.out.println();
 		if (falhas == 0) {
@@ -36,6 +37,20 @@ public class TesteFimDeJogo {
 		verificar("Vitória J1: tabuleiro cheio", t.estaCheio());
 		verificar("Vitória J1: 5 células contra 4", t.contarCelulas(j1) == 5 && t.contarCelulas(j2) == 4);
 		verificar("Vitória J1: getVencedor devolve o J1", jogo.getVencedor() == j1);
+	}
+
+	// sem capturas os pontos ficam 5x5, mas quem jogou 5 cartas tem mais células e vence
+	private static void testarEmpateDePontosNaoEmpataOJogo() {
+		Jogo jogo = novoJogo(config(false, false, false));
+		Jogador j1 = jogo.getJogador1();
+		Jogador j2 = jogo.getJogador2();
+		Tabuleiro t = jogo.getTabuleiro();
+
+		preencher(t, j1, j2, new int[] { 1, 3, 5, 7, 9 }, new int[] { 2, 4, 6, 8 });
+
+		verificar("Empate de pontos: 5x5", j1.getPontos() == 5 && j2.getPontos() == 5);
+		verificar("Empate de pontos: o jogo não termina empatado", jogo.getVencedor() != null);
+		verificar("Empate de pontos: vence quem tem mais células (J1)", jogo.getVencedor() == j1);
 	}
 
 	private static ConfiguracoesRegras config(boolean same, boolean plus, boolean combo) {
