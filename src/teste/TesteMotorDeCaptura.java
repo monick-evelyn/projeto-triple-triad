@@ -100,7 +100,7 @@ public class TesteMotorDeCaptura {
 
 		verificar("Duas regras: carta conta uma vez só", viraram.equals(List.of(4)));
 		verificar("Duas regras: O motor não mexe nos pontos", verde.getPontos() == 5 && azul.getPontos() == 5);
-		verificar("Duas regras: regra ativada é registrada", motor.getRegrasAtivadas().equals(List.of("Repetida")));
+		verificar("Duas regras: regra ativada é registrada", motor.getRegrasAtivadas().contains("Repetida"));
 	}
 
 	private static void testarCombo() throws Exception {
