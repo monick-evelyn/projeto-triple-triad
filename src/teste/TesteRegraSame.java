@@ -49,9 +49,6 @@ public class TesteRegraSame {
 
 		verificar("Same: 10 = 10 e 0 = 0 captura a posição 1 e 5",
 				regraSame.capturas(tabuleiro1, 4, jogador1).equals(esperado));
-
-		
-		System.out.println();
 		// 2. Uma igualdade sozinha não captura
 		Tabuleiro tabuleiro2 = new Tabuleiro();
 
@@ -68,8 +65,7 @@ public class TesteRegraSame {
 		
 		verificar("Same: 3 = 3, porém não captura",
 				regraSame.capturas(tabuleiro2, 4, jogador1).equals(esperado));
-		
-		System.out.println();
+
 		// 3. Mais de duas igualdades capturam a carta 
 		Tabuleiro tabuleiro3 = new Tabuleiro();
 
@@ -92,7 +88,6 @@ public class TesteRegraSame {
 				regraSame.capturas(tabuleiro3, 2, jogador1).equals(esperado));
 		
 		// 4. Carta própria não conta para o mínimo de 2
-		System.out.println();
 		Tabuleiro tabuleiro4 = new Tabuleiro();
 		Carta carta11 = new Carta("Mago", 3, 4, 3, 3); // cima, direita, baixo, esquerda
 		Carta carta12 = new Carta("Arqueiro", 0, 10, 1, 4); // cima, direita, baixo, esquerda
@@ -107,7 +102,6 @@ public class TesteRegraSame {
 				regraSame.capturas(tabuleiro4, 2, jogador1).equals(esperado));
 		
 		// 4. A borda do tabuleiro não conta como igualdade
-		System.out.println();
 		Tabuleiro tabuleiro5 = new Tabuleiro();
 		Carta carta14 = new Carta("Dumbledore", 1, 1, 1, 1); // cima, direita, baixo, esquerda
 		Carta carta15 = new Carta("Valdemort", 1, 1, 1, 1); // cima, direita, baixo, esquerda
