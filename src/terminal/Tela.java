@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jogo.ConfiguracoesRegras;
- 
+
 public class Tela {
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
 		for (int i = 0; i < 3; i++) {
@@ -112,7 +112,7 @@ public class Tela {
 			}
 			desenhos.add(desenho);
 		}
-		
+
 		System.out.println("============================ MÃO OPONENTE ===============================");
 		for (int j = 0; j < 7; j++) {
 			for (int y = 0; y < desenhos.size(); y++) {
@@ -156,24 +156,20 @@ public class Tela {
 	// MANUALMENTE
 	// VOU ANEXAR OUTRAS OPÇÕES QUE PODEM SER USADAS, GERADAS PELO GEMINI
 
-	/*public static void limparTela() {
-		try {
-			String os = System.getProperty("os.name").toLowerCase();
+	/*
+	 * public static void limparTela() { try { String os =
+	 * System.getProperty("os.name").toLowerCase();
+	 *
+	 * if (os.contains("win")) { new ProcessBuilder("cmd", "/c",
+	 * "cls").inheritIO().start().waitFor(); } else { new
+	 * ProcessBuilder("clear").inheritIO().start().waitFor(); } } catch (Exception
+	 * e) { System.out.println("Não foi possível limpar o terminal."); } }
+	 */
 
-			if (os.contains("win")) {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-			} else {
-				new ProcessBuilder("clear").inheritIO().start().waitFor();
-			}
-		} catch (Exception e) {
-			System.out.println("Não foi possível limpar o terminal.");
-		}
-	}*/
-
-	/*public static void limparTel2a() {
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
-	}*/
+	/*
+	 * public static void limparTel2a() { System.out.print("\033[H\033[2J");
+	 * System.out.flush(); }
+	 */
 
 	public static void limpar() {
 		for (int i = 0; i < 50; i++) {
@@ -183,7 +179,7 @@ public class Tela {
 
 	public static void telaDeTroca(Jogador proximo) {
 		limpar();
-		System.out.println("Jogador da vez: "+proximo.getNome());		
+		System.out.println("Jogador da vez: " + proximo.getNome());
 		Entrada.aguardarEnter("Pressione Enter para continuar...");
 	}
 
@@ -245,7 +241,9 @@ public class Tela {
 		System.out.println(
 				"======================================== JOGADA ATUAL ========================================");
 		System.out.println("Nome: " + nome + " capturou " + capturas + " cartas (" + mostrarCapturas + "!)");
-		System.out.println("Capturas em cadeia: " + emCadeia);
+		if (emCadeia > 0) {
+			System.out.println("COMBO! " + emCadeia + " cartas capturadas em cadeia!");
+		}
 		System.out.println(
 				"==============================================================================================");
 	}

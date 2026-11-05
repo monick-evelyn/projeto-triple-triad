@@ -55,7 +55,10 @@ public class TesteTela {
 		//Tela.mostrarJogada("Ana", 2, regras, 1);
 		Tela.mostrarResultado(tabuleiro, j1, j2);
 
-		
+		List<String> regras=new ArrayList<>();
+		regras.add("Básica");
+		Tela.mostrarJogada("Clarissa", 3, regras, 2);
+		Tela.mostrarJogada("Elyson", 1, regras, 0);
 		
 	}
 
