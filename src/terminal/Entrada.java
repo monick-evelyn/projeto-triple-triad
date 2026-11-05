@@ -15,9 +15,9 @@ public class Entrada {
 				if (numero >= min && numero <= max) {
 					return numero;
 				}
-				System.out.print("Número inválido, digite novamente: ");
+				System.out.print("Número inválido, digite novamente! ");
 			} catch (NumberFormatException e) {
-				System.out.print("Entrada inválida! Digite um número inteiro: ");
+				System.out.print("Entrada inválida! Digite um número inteiro. ");
 			}
 		}
 	}
