@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jogo.ConfiguracoesRegras;
-import jogo.Jogo;
  
 public class Tela {
 	public static void desenharTabuleiro(Tabuleiro t, Jogador j1, Jogador j2) {
