@@ -8,16 +8,16 @@ public class Entrada {
 	public static int lerInteiro(String pergunta, int min, int max) {
 		while (true) {
 			System.out.print(pergunta);
-			String resposta = leitor.nextLine();
+			String resposta = leitor.nextLine().trim();
 
 			try {
 				int numero = Integer.parseInt(resposta);
 				if (numero >= min && numero <= max) {
 					return numero;
 				}
-				System.out.print("Número inválido, digite novamente! ");
+				System.out.print("ERRO: Número fora do intervalo desejado, digite novamente! ");
 			} catch (NumberFormatException e) {
-				System.out.print("Entrada inválida! Digite um número inteiro. ");
+				System.out.print("ERRO: Entrada inválida! Digite um número inteiro. ");
 			}
 		}
 	}
@@ -33,7 +33,7 @@ public class Entrada {
 					|| resposta.equalsIgnoreCase("Nao")) {
 				return false;
 			} else {
-				System.out.print("Resposta inválida, digite novamente: ");
+				System.out.print("ERRO: Resposta inválida, digite novamente S ou N: ");
 			}
 		}
 	}
@@ -46,7 +46,7 @@ public class Entrada {
 			if (!resposta.isEmpty()) {
 				return resposta;
 			}
-			System.out.print("A resposta está inválida. Tente novamente: ");
+			System.out.print("ERRO: A resposta está inválida. Tente novamente: ");
 		}
 
 	}
