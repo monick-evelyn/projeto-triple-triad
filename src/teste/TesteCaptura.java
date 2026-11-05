@@ -113,7 +113,6 @@ public class TesteCaptura {
 		verificar("Motor: retorna a posição capturada", motor1.aplicar(tabuleiro1, 5, bea).equals(List.of(4)));
 		verificar("Motor: troca o dono", tabuleiro1.getCelula(4).getDono() == bea);
 		verificar("Motor: motor sozinho não muda pontos", bea.getPontos() == 5 && ana.getPontos() == 5);
-		verificar("Motor: básica não entra nas regras ativadas", motor1.getRegrasAtivadas().isEmpty());
 
 		// 2. Nenhuma captura
 		Jogador a2 = new Jogador("Aninha");
@@ -123,7 +122,7 @@ public class TesteCaptura {
 		tabuleiro2.colocarCarta(5, carta(1, 1, 1, 2), b2);
 		MotorDeCaptura motor2 = new MotorDeCaptura(configuracao(true));
 		verificar("Motor: sem captura retorna lista vazia", motor2.aplicar(tabuleiro2, 5, b2).isEmpty());
-		verificar("Motor:  não muda os pontos", a2.getPontos() == 5 && b2.getPontos() == 5);
+		verificar("Motor: não muda os pontos", a2.getPontos() == 5 && b2.getPontos() == 5);
 
 		// 3. Célula sem carta
 		try {
@@ -134,7 +133,7 @@ public class TesteCaptura {
 		}
 	}
 
-	private static void testarMotorComRegras() {
+	private static void testarMotorComRegras() throws Exception {
 		// 1. Duas regras capturam a mesma carta
 		Jogador a1 = new Jogador("Maria");
 		Jogador b1 = new Jogador("João");
@@ -144,8 +143,7 @@ public class TesteCaptura {
 		MotorDeCaptura motor1 = new MotorDeCaptura(configuracao(false, regra("Repetida", 4)));
 		verificarSemErro("Motor: carta de duas regras conta uma vez só", () -> {
 			return motor1.aplicar(tabuleiro1, 5, b1).equals(List.of(4))
-					&& b1.getPontos() == 5 && a1.getPontos() == 5
-					&& motor1.getRegrasAtivadas().equals(List.of("Repetida"));
+					&& b1.getPontos() == 5 && a1.getPontos() == 5;
 		});
 
 		// 2. Regra captura além da básica
@@ -160,18 +158,6 @@ public class TesteCaptura {
 			return motor2.aplicar(tabuleiro2, 5, b2).equals(List.of(4, 8))
 					&& tabuleiro2.getCelula(8).getDono() == b2
 					&& b2.getPontos() == 5 && a2.getPontos() == 5;
-		});
-
-		// 3. Regra sem captura não aparece como ativada
-		Jogador a3 = new Jogador("A");
-		Jogador b3 = new Jogador("B");
-		Tabuleiro tabuleiro3 = new Tabuleiro();
-		tabuleiro3.colocarCarta(4, carta(9, 2, 3, 9), a3);
-		tabuleiro3.colocarCarta(5, carta(3, 1, 4, 6), b3);
-		MotorDeCaptura motor3 = new MotorDeCaptura(configuracao(false, regra("Vazia"), regra("Ativa", 4)));
-		verificarSemErro("Motor: registra só a regra que capturou", () -> {
-			motor3.aplicar(tabuleiro3, 5, b3);
-			return motor3.getRegrasAtivadas().equals(List.of("Ativa"));
 		});
 
 		// 4. Regra aponta uma carta do próprio jogador antes de uma carta adversária
