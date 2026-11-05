@@ -18,6 +18,7 @@ public class TesteFimDeJogo {
 		testarVitoriaJogador1SemCapturas();
 		testarEmpateDePontosNaoEmpataOJogo();
 		testarPartidaSimuladaVitoriaJogador2();
+		testarEmpateDeCelulasComTabuleiroIncompleto();
 
 		System.out.println();
 		if (falhas == 0) {
@@ -87,7 +88,7 @@ public class TesteFimDeJogo {
 				jogo.trocarJogador();
 			}
 		}
-
+		
 		verificar("Partida simulada: termina com as 9 células ocupadas", t.estaCheio());
 		verificar("Partida simulada: J2 capturou 4 cartas", capturasJ2 == 4);
 		verificar("Partida simulada: J2 8 células e J1 1", t.contarCelulas(j2) == 8 && t.contarCelulas(j1) == 1);
@@ -95,6 +96,25 @@ public class TesteFimDeJogo {
 		verificar("Partida simulada: soma dos pontos continua 10", j1.getPontos() + j2.getPontos() == 10);
 		verificar("Partida simulada: o J1 começou, mas o vencedor é o J2", jogo.getVencedor() == j2);
 		verificar("Partida simulada: a única célula do J1 é a 9", t.getCelula(9).getDono() == j1);
+	}
+	
+	private static void testarEmpateDeCelulasComTabuleiroIncompleto() {
+		Jogo jogo = novoJogo(config(false, false, false));
+		Jogador j1 = jogo.getJogador1();
+		Jogador j2 = jogo.getJogador2();
+		Tabuleiro t = jogo.getTabuleiro();
+
+		preencher(t, j1, j2, new int[] { 1, 3, 5, 7 }, new int[] { 2, 4, 6, 8 });
+
+		verificar("Empate 4x4: tabuleiro ainda não está cheio", !t.estaCheio());
+		verificar("Empate 4x4: células iguais", t.contarCelulas(j1) == 4 && t.contarCelulas(j2) == 4);
+		verificar("Empate 4x4: getVencedor devolve null (empate)", jogo.getVencedor() == null);
+
+		// Com a 9ª carta o tabuleiro enche e o empate some
+		t.colocarCarta(9, carta(), j2);
+		verificar("Empate 4x4: com a 9ª carta do J2, vence o J2 (5x4)", jogo.getVencedor() == j2);
+		t.getCelula(1).trocarDono(j2);
+		verificar("Empate 4x4: J2 captura mais uma e fica 6x3", t.contarCelulas(j2) == 6 && jogo.getVencedor() == j2);
 	}
 
 	private static ConfiguracoesRegras config(boolean same, boolean plus, boolean combo) {
