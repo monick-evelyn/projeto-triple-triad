@@ -27,8 +27,12 @@ public class MotorDeCaptura {
 		regrasAtivadas = new ArrayList<>();
 		capturasEmCadeia = 0;
 
+		List<Integer> capturasBasicas = basica.capturas(tabuleiro, posicao, jogador);
 		Set<Integer> capturadas = new LinkedHashSet<>(basica.capturas(tabuleiro, posicao, jogador));
 
+		if (!capturasBasicas.isEmpty()) {
+			regrasAtivadas.add("Básica");
+		}
 		for (Regra regra : regras) {
 			List<Integer> excucoesDaRegra = regra.capturas(tabuleiro, posicao, jogador);
 			if (!excucoesDaRegra.isEmpty()) {
@@ -44,6 +48,9 @@ public class MotorDeCaptura {
 			List<Integer> novasCapturas = regraCombo.cascata(tabuleiro, new ArrayList<>(capturadas), jogador);
 			viraramCombo.addAll(novasCapturas);
 			capturasEmCadeia = novasCapturas.size();
+		}
+		if (capturasEmCadeia > 0) {
+			regrasAtivadas.add("Combo");
 		}
 		return viraramCombo;
 	}
@@ -72,7 +79,7 @@ public class MotorDeCaptura {
 		// antigoDono.perderPonto();
 	}
 
-	/*private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo)
+	private void capturarEmCadeia(Tabuleiro tabuleiro, int posicao, Jogador jogador, List<Integer> viraramCombo)
 			throws Exception {
 		for (int vizinha : basica.capturas(tabuleiro, posicao, jogador)) {
 			Celula celula = tabuleiro.getCelula(vizinha);

@@ -159,7 +159,7 @@ public class Tela {
 	/*
 	 * public static void limparTela() { try { String os =
 	 * System.getProperty("os.name").toLowerCase();
-	 *
+	 * 
 	 * if (os.contains("win")) { new ProcessBuilder("cmd", "/c",
 	 * "cls").inheritIO().start().waitFor(); } else { new
 	 * ProcessBuilder("clear").inheritIO().start().waitFor(); } } catch (Exception
@@ -189,8 +189,7 @@ public class Tela {
 		System.out.println("|==================================================|");
 		System.out.println("|  [1] Iniciar jogo                                |");
 		System.out.println("|  [2] Consultar regras                            |");
-		System.out.println("|  [3] Ver instruções do jogo                      |");
-		System.out.println("|  [4] Sair                                        |");
+		System.out.println("|  [3] Sair                                        |");
 		System.out.println("+--------------------------------------------------+");
 	}
 
@@ -215,14 +214,17 @@ public class Tela {
 			System.out.println("[ SAME ]");
 			System.out.println(
 					"• Se 2 ou mais lados encostados forem iguais, as cartas adversárias envolvidas são capturadas.\n");
-		} else if (regras.isPlus()) {
+		}
+		if (regras.isPlus()) {
 			System.out.println("[ PLUS ]");
 			System.out.println(
 					"• Se 2 ou mais pares de lados encostados tiverem a mesma soma, as cartas são capturadas.\n");
-		} else if (regras.isCombo()) {
+		}
+		if (regras.isCombo()) {
 			System.out.println("[ COMBO ]");
 			System.out.println("• Cartas recém-capturadas capturam vizinhas mais fracas, em cadeia.\n");
-		} else if (regras.isThreeOpen()) {
+		}
+		if (regras.isThreeOpen()) {
 			System.out.println("[ THREE OPEN ]");
 			System.out.println("• Três cartas da mão de cada jogador ficam visíveis ao oponente.\n");
 		}
@@ -238,14 +240,21 @@ public class Tela {
 			}
 			mostrarCapturas += regras.get(i);
 		}
-		System.out.println(
-				"======================================== JOGADA ATUAL ========================================");
-		System.out.println("Nome: " + nome + " capturou " + capturas + " cartas (" + mostrarCapturas + "!)");
-		if (emCadeia > 0) {
-			System.out.println("COMBO! " + emCadeia + " cartas capturadas em cadeia!");
+		if (capturas == 0) {
+			System.out.println(
+					"======================================== JOGADA ATUAL ========================================");
+			System.out.println(nome + " jogou uma carta, mas não conseguiu capturar nenhuma.");
+			System.out.println(
+					"==============================================================================================");
+		} else {
+			System.out.println(
+					"======================================== JOGADA ATUAL ========================================");
+			System.out.println("Nome: " + nome + " capturou " + capturas + " cartas (" + mostrarCapturas + "!)");
+			System.out.println("Capturas em cadeia: " + emCadeia);
+			System.out.println(
+					"==============================================================================================");
 		}
-		System.out.println(
-				"==============================================================================================");
+
 	}
 
 	public static void mostrarResultado(Tabuleiro t, Jogador j1, Jogador j2) {

@@ -114,6 +114,7 @@ public class Jogo {
 	}
 
 	private void jogarTurno() throws Exception {
+		Tela.mostrarRegras(config);
 		Tela.desenharTabuleiro(tabuleiro, jogador1, jogador2);
 
 		Carta carta = escolherCarta();
@@ -123,10 +124,10 @@ public class Jogo {
 
 		List<Integer> capturadas = motor.aplicar(tabuleiro, posicao, jogadorAtual);
 		atualizarPontuacao(capturadas.size());
-		if (!capturadas.isEmpty()) {
-			Tela.mostrarJogada(jogadorAtual.getNome(), capturadas.size(), motor.getRegrasAtivadas(),
-					motor.getCapturasEmCadeia());
-		}
+
+		Tela.mostrarJogada(jogadorAtual.getNome(), capturadas.size(), motor.getRegrasAtivadas(),
+				motor.getCapturasEmCadeia());
+
 		Tela.desenharPlacar(jogador1, jogador2);
 	}
 
