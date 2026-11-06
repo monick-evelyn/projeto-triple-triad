@@ -19,6 +19,8 @@ public class Main {
 			switch (opcao) {
 			case 1:
 				iniciarJogo();
+				opcao = 3; 
+				encerrar();
 				break;
 			case 2:
 				ConfiguracoesRegras regras = new ConfiguracoesRegras();
@@ -42,12 +44,16 @@ public class Main {
 		List<Carta> baralho = LeitorCSV.ler("cards.csv");
 		ConfiguracoesRegras config = new ConfiguracoesRegras();
 		Random random = new Random();
-
+		
 		boolean jogarDeNovo = true;
 		while (jogarDeNovo) {
 			Jogo jogo = new Jogo(nome1, nome2, baralho, config, random); // partida nova: tabuleiro vazio e 5 x 5
 			jogo.iniciar();
-			jogarDeNovo = Entrada.lerSimNao("Deseja jogar novamente (S/N)?");
+			jogarDeNovo = Entrada.lerSimNao("Deseja jogar novamente (S/N)? ");
 		}
+	}
+	
+	private static void encerrar() {
+		System.out.println("Saindo do jogo...Volte sempre!");
 	}
 }
