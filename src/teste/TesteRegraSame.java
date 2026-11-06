@@ -1,0 +1,127 @@
+package teste;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Carta;
+import modelo.Jogador;
+import modelo.Tabuleiro;
+import regras.Regra;
+import regras.RegraSame;
+
+public class TesteRegraSame {
+	private static int falhas = 0;
+
+	public static void main(String[] args) throws Exception {
+
+		testarRegraSame();
+
+		System.out.println();
+		if (falhas == 0) {
+			System.out.println("Todos os testes passaram.");
+		} else {
+			System.out.println(falhas + " teste(s) falharam.");
+		}
+	}
+
+	private static void testarRegraSame() throws Exception {
+		Regra regraSame = new RegraSame();
+
+		Jogador jogador1 = new Jogador("Monick");
+		Jogador jogador2 = new Jogador("Clarissa");
+
+		// 1. Normal: Se os valores nas bordas de duas ou mais cartas adjacentes forem
+		// iguais, a carta do oponente é capturada.
+		Tabuleiro tabuleiro1 = new Tabuleiro();
+
+		Carta carta1 = new Carta("Bisão", 9, 9, 10, 9); // cima, direita, baixo, esquerda
+		Carta carta2 = new Carta("Fenix", 10, 0, 1, 1); // cima, direita, baixo, esquerda
+		Carta carta3 = new Carta("Slime", 9, 9, 9, 0); // cima, direita, baixo, esquerda
+
+		tabuleiro1.colocarCarta(1, carta1, jogador2);
+		tabuleiro1.colocarCarta(4, carta2, jogador1);
+		tabuleiro1.colocarCarta(5, carta3, jogador2);
+
+		// System.out.println(regraSame.capturas(tabuleiro1, 4, jogador1));
+		List<Integer> esperado = new ArrayList<Integer>();
+		esperado.add(1);
+		esperado.add(5);
+
+		verificar("Same: 10 = 10 e 0 = 0 captura a posição 1 e 5",
+				regraSame.capturas(tabuleiro1, 4, jogador1).equals(esperado));
+		// 2. Uma igualdade sozinha não captura
+		Tabuleiro tabuleiro2 = new Tabuleiro();
+
+		Carta carta4 = new Carta("Mago", 1, 2, 3, 4); // cima, direita, baixo, esquerda
+		Carta carta5 = new Carta("Arqueiro", 3, 0, 0, 0); // cima, direita, baixo, esquerda
+		Carta carta6 = new Carta("Guerreiro", 10, 10, 10, 10); // cima, direita, baixo, esquerda
+		
+		tabuleiro2.colocarCarta(1, carta4, jogador2);
+		tabuleiro2.colocarCarta(4, carta5, jogador1);
+		tabuleiro2.colocarCarta(5, carta6, jogador2);
+
+		// System.out.println(regraSame.capturas(tabuleiro1, 4, jogador1));
+		esperado.clear();
+		
+		verificar("Same: 3 = 3, porém não captura",
+				regraSame.capturas(tabuleiro2, 4, jogador1).equals(esperado));
+
+		// 3. Mais de duas igualdades capturam a carta 
+		Tabuleiro tabuleiro3 = new Tabuleiro();
+
+		Carta carta7 = new Carta("Mago", 3, 4, 3, 3); // cima, direita, baixo, esquerda
+		Carta carta8 = new Carta("Arqueiro", 0, 10, 1, 4); // cima, direita, baixo, esquerda
+		Carta carta9 = new Carta("Guerreiro", 10, 10, 10, 10); // cima, direita, baixo, esquerda
+		Carta carta10 = new Carta("Guerreiro", 1, 8, 8, 8); // cima, direita, baixo, esquerda
+		
+		tabuleiro3.colocarCarta(1, carta7, jogador2);
+		tabuleiro3.colocarCarta(2, carta8, jogador1);
+		tabuleiro3.colocarCarta(3, carta9, jogador2);
+		tabuleiro3.colocarCarta(5, carta10, jogador2);
+
+		//System.out.println(regraSame.capturas(tabuleiro3, 2, jogador1));
+		esperado.add(5);
+		esperado.add(1);
+		esperado.add(3);
+		
+		verificar("Same: 4 = 4; 1 = 1; 10 = 10, captura na posicão 1, 3 e 5",
+				regraSame.capturas(tabuleiro3, 2, jogador1).equals(esperado));
+		
+		// 4. Carta própria não conta para o mínimo de 2
+		Tabuleiro tabuleiro4 = new Tabuleiro();
+		Carta carta11 = new Carta("Mago", 3, 4, 3, 3); // cima, direita, baixo, esquerda
+		Carta carta12 = new Carta("Arqueiro", 0, 10, 1, 4); // cima, direita, baixo, esquerda
+		Carta carta13 = new Carta("Guerreiro", 10, 10, 10, 10); // cima, direita, baixo, esquerda
+		
+		tabuleiro4.colocarCarta(1, carta11, jogador1);
+		tabuleiro4.colocarCarta(2, carta12, jogador1);
+		tabuleiro4.colocarCarta(5, carta13, jogador2);
+		
+		esperado.clear();
+		verificar("Same: 10 = 10 (outro dono) e 4 = 4 (mesmo dono) porém não captura",
+				regraSame.capturas(tabuleiro4, 2, jogador1).equals(esperado));
+		
+		// 4. A borda do tabuleiro não conta como igualdade
+		Tabuleiro tabuleiro5 = new Tabuleiro();
+		Carta carta14 = new Carta("Dumbledore", 1, 1, 1, 1); // cima, direita, baixo, esquerda
+		Carta carta15 = new Carta("Valdemort", 1, 1, 1, 1); // cima, direita, baixo, esquerda
+		Carta carta16 = new Carta("Harry", 1, 1, 1, 1); // cima, direita, baixo, esquerda
+		
+		tabuleiro5.colocarCarta(1, carta14, jogador2);
+		tabuleiro5.colocarCarta(5, carta15, jogador1);
+		tabuleiro5.colocarCarta(3, carta16, jogador2);
+		
+		
+		verificar("Same: Não captura pois é borda",
+				regraSame.capturas(tabuleiro5, 5, jogador1).equals(esperado));
+	}
+
+	private static void verificar(String descricao, boolean passou) {
+		if (passou) {
+			System.out.println("[OK] " + descricao);
+		} else {
+			System.out.println("[FALHOU] " + descricao);
+			falhas++;
+		}
+	}
+}
