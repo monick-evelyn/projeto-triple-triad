@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🃏 Triple Trip
+# 🃏 Jogo Triple Trip 🃏
 
 ### Uma versão de terminal do clássico Triple Triad
 
@@ -74,7 +74,7 @@ Os valores de `ranks` seguem o formato `[UP:1,LEFT:5,DOWN:1,RIGHT:4]`. O valor *
 
 | Monick Évelyn Soares Nóbrega de Araújo | Clarissa Sousa Gomes |
 | --- | --- |
-| [![GitHub](https://img.shields.io/badge/GitHub-monick--evelyn-181717?logo=github)](https://github.com/monick-evelyn) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Monick-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/monickevelyn) [![Instagram](https://img.shields.io/badge/Instagram-monii.tech-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/monii.tech) [![E-mail](https://img.shields.io/badge/E--mail-contato-EA4335?logo=gmail&logoColor=white)](mailto:monick.evelyn.tech@gmail.com) | [![GitHub](https://img.shields.io/badge/GitHub-Clarissagomess-181717?logo=github)](https://github.com/Clarissagomess) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Clarissa-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/clarissasousagomes/) |
+| [![GitHub](https://img.shields.io/badge/GitHub-monick--evelyn-181717?logo=github)](https://github.com/monick-evelyn) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Monick-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/monickevelyn) [![Instagram](https://img.shields.io/badge/Instagram-monii.tech-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/monii.tech) [![E-mail](https://img.shields.io/badge/E--mail-contato-EA4335?logo=gmail&logoColor=white)](mailto:monick.evelyn.tech@gmail.com) | [![GitHub](https://img.shields.io/badge/GitHub-Clarissagomess-181717?logo=github)](https://github.com/Clarissagomess) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Clarissa-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/clarissasousagomes/) [![E-mail](https://img.shields.io/badge/E--mail-contato-EA4335?logo=gmail&logoColor=white)](mailto:clarissasousags@gmail.com) |
 
 ## 🌿 Fluxo de trabalho
 
