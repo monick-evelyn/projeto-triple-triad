@@ -41,7 +41,7 @@ public class Main {
 		System.out.println("======================================== NOVO JOGO ========================================");
 		String nome1 = Entrada.lerTexto("Digite o nome do primeiro jogador: ");
 		String nome2 = Entrada.lerTexto("Digite o nome do segundo jogador: ");
-		List<Carta> baralho = LeitorCSV.ler("cards.csv");
+		List<Carta> baralho = LeitorCSV.ler("cardsApresentacao.csv");
 		ConfiguracoesRegras config = new ConfiguracoesRegras();
 		Random random = new Random();
 		
