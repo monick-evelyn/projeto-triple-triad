@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🃏 Jogo Triple Trip 🃏
+# 🃏 Jogo Triple Triad 🃏
 
 ### Uma versão de terminal do clássico Triple Triad
 
