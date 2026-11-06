@@ -34,7 +34,6 @@ public class Entrada {
 				return false;
 			} else {
 				System.out.print("ERRO: Resposta inválida, digite novamente S ou N: ");
-				resposta = leitor.nextLine().trim().toLowerCase();
 			}
 		}
 	}
